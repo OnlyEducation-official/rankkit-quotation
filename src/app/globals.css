@@ -128,3 +128,46 @@
     @apply font-sans;
   }
 }
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+
+  tr,
+  td,
+  th,
+  .avoid-break,
+  .summary-box,
+  .notes-section,
+  .terms-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .force-page-break {
+    break-before: page;
+    page-break-before: always;
+  }
+}
