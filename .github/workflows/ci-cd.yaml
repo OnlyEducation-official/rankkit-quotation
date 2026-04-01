@@ -46,7 +46,7 @@ jobs:
             set -e
 
             echo "➡️ Going to project directory"
-            cd /home/delicate/apps/quotation-app
+            cd /home/delicate/apps/rankkit-quotation
 
             echo "➡️ Pulling latest code"
             git fetch origin
