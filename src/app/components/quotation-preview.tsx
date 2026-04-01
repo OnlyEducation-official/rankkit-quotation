@@ -69,9 +69,6 @@ export default function QuotationPreview({ quotation }: Props) {
 
                     <div style={{ textAlign: "right" }}>
                         <p style={{ margin: "4px 0" }}>
-                            <strong>Quotation No:</strong> {quotation.quotationNumber}
-                        </p>
-                        <p style={{ margin: "4px 0" }}>
                             <strong>Date:</strong> {quotation.quotationDate}
                         </p>
                         <p style={{ margin: "4px 0" }}>
@@ -93,7 +90,7 @@ export default function QuotationPreview({ quotation }: Props) {
                             <th style={thStyle}>Description</th>
                             {/* <th style={thStyleRight}>Qty</th> */}
                             <th style={thStyleRight}>Rate</th>
-                            <th style={thStyleRight}>Tax %</th>
+                            {/* <th style={thStyleRight}>Tax %</th> */}
                             <th style={thStyleRight}>Amount</th>
                         </tr>
                     </thead>
@@ -114,7 +111,7 @@ export default function QuotationPreview({ quotation }: Props) {
                                     </td>
                                     {/* <td style={tdStyleRight}>{item.quantity}</td> */}
                                     <td style={tdStyleRight}>{item.rate.toFixed(2)}</td>
-                                    <td style={tdStyleRight}>{item.taxPercent}</td>
+                                    {/* <td style={tdStyleRight}>{item.taxPercent}</td> */}
                                     <td style={tdStyleRight}>{amount.toFixed(2)}</td>
                                 </tr>
                             );

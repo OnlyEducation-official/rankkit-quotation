@@ -13,7 +13,7 @@ export const COMPANY_PRESETS: Record<
 > = {
   "rankkit-media": {
     companyName: "Rankkit Media",
-    companyAddress: "Navi Mumbai, Maharashtra",
+    companyAddress: "Ambience Court, 1702, Phase 2, Sector 19E, Vashi, Navi Mumbai, Maharashtra 400703",
     companyPhone: "+91 9090 434376",
     companyEmail: "rankkitmedia@gmail.com",
     notes:
@@ -37,7 +37,7 @@ export const COMPANY_PRESETS: Record<
 
   "rankkit-studio": {
     companyName: "Rankkit Studio",
-    companyAddress: "Navi Mumbai, Maharashtra",
+    companyAddress: "Ambience Court, 1703, Phase 2, Sector 19E, Vashi, Navi Mumbai, Maharashtra 400703",
     companyPhone: "+91 9090 434376",
     companyEmail: "rankkitstudio@gmail.com",
     notes:

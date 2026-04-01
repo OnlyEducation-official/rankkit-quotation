@@ -17,6 +17,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { COMPANY_PRESETS } from "../lib/company-presets";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 
 type QuotationFormProps = {
   quotation: QuotationData;
@@ -129,19 +140,19 @@ export default function QuotationForm({
   const grandTotal = subtotal + taxTotal - (quotation.discount || 0);
 
   const handleCompanyChange = (value: "rankkit-media" | "rankkit-studio") => {
-  const preset = COMPANY_PRESETS[value];
+    const preset = COMPANY_PRESETS[value];
 
-  setQuotation((prev) => ({
-    ...prev,
-    companyType: value,
-    companyName: preset.companyName,
-    companyAddress: preset.companyAddress,
-    companyPhone: preset.companyPhone,
-    companyEmail: preset.companyEmail,
-    notes: preset.notes,
-    terms: preset.terms,
-  }));
-};
+    setQuotation((prev) => ({
+      ...prev,
+      companyType: value,
+      companyName: preset.companyName,
+      companyAddress: preset.companyAddress,
+      companyPhone: preset.companyPhone,
+      companyEmail: preset.companyEmail,
+      notes: preset.notes,
+      terms: preset.terms,
+    }));
+  };
 
   return (
     <div className="space-y-6">
@@ -151,15 +162,43 @@ export default function QuotationForm({
           Add Item
         </Button>
 
-        <Button
-          type="button"
-          variant="outline"
-          onClick={resetForm}
-          className="gap-2"
-        >
-          <RotateCcw className="h-4 w-4" />
-          Reset
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              type="button"
+              variant="outline"
+              className="gap-2"
+            >
+              <RotateCcw className="h-4 w-4" />
+              Reset
+            </Button>
+          </AlertDialogTrigger>
+
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Are you sure you want to reset?
+              </AlertDialogTitle>
+
+              <AlertDialogDescription>
+                This will clear all quotation data including items, client details, and totals. This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+
+            <AlertDialogFooter>
+              <AlertDialogCancel>
+                Cancel
+              </AlertDialogCancel>
+
+              <AlertDialogAction
+                onClick={resetForm}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Yes, Reset
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         <Button
           type="button"
@@ -172,9 +211,11 @@ export default function QuotationForm({
       </div>
 
       <Card>
+
         <CardHeader>
           <CardTitle>Company Details</CardTitle>
         </CardHeader>
+
         <div className="md:col-span-2">
           <label className="mb-2 block text-sm font-medium">
             Select Company
@@ -195,6 +236,7 @@ export default function QuotationForm({
             </SelectContent>
           </Select>
         </div>
+
         <CardContent className="grid gap-4 md:grid-cols-2">
           <Input
             placeholder="Company Name"
@@ -255,22 +297,31 @@ export default function QuotationForm({
         <CardHeader>
           <CardTitle>Quotation Details</CardTitle>
         </CardHeader>
+
         <CardContent className="grid gap-4 md:grid-cols-3">
-          <Input
-            placeholder="Quotation Number"
-            value={quotation.quotationNumber}
-            onChange={(e) => updateField("quotationNumber", e.target.value)}
-          />
-          <Input
-            type="date"
-            value={quotation.quotationDate}
-            onChange={(e) => updateField("quotationDate", e.target.value)}
-          />
-          <Input
-            type="date"
-            value={quotation.validTill}
-            onChange={(e) => updateField("validTill", e.target.value)}
-          />
+          {/* Quotation Date */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm font-medium text-gray-700">
+              Quotation Date
+            </label>
+            <Input
+              type="date"
+              value={quotation.quotationDate}
+              onChange={(e) => updateField("quotationDate", e.target.value)}
+            />
+          </div>
+
+          {/* Valid Till */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm font-medium text-gray-700">
+              Valid Till
+            </label>
+            <Input
+              type="date"
+              value={quotation.validTill}
+              onChange={(e) => updateField("validTill", e.target.value)}
+            />
+          </div>
         </CardContent>
       </Card>
 
@@ -315,52 +366,22 @@ export default function QuotationForm({
                 onChange={(value) => updateItem(item.id, "description", value)}
               />
 
-
-
               <div className="grid gap-4 md:grid-cols-4">
-                {/* <Input
-                  type="number"
-                  min="1"
-                  placeholder="Quantity"
-                  value={item.quantity}
-                  onChange={(e) =>
-                    updateItem(
-                      item.id,
-                      "quantity",
-                      Number(e.target.value || 0),
-                    )
-                  }
-                /> */}
+                {/* Rate */}
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-700">
+                    Rate
+                  </label>
+                  <Input
+                    type="number"
+                    min="0"
+                    value={item.rate}
+                    onChange={(e) =>
+                      updateItem(item.id, "rate", Number(e.target.value || 0))
+                    }
+                  />
+                </div>
 
-                <Input
-                  type="number"
-                  min="0"
-                  placeholder="Rate"
-                  value={item.rate}
-                  onChange={(e) =>
-                    updateItem(item.id, "rate", Number(e.target.value || 0))
-                  }
-                />
-
-                <Input
-                  type="number"
-                  min="0"
-                  placeholder="Tax %"
-                  value={item.taxPercent}
-                  onChange={(e) =>
-                    updateItem(
-                      item.id,
-                      "taxPercent",
-                      Number(e.target.value || 0),
-                    )
-                  }
-                />
-
-                <Input
-                  readOnly
-                  value={getItemTotal(item).toFixed(2)}
-                  placeholder="Amount"
-                />
               </div>
             </div>
           ))}
@@ -387,18 +408,6 @@ export default function QuotationForm({
             }
           />
 
-          {/* <Textarea
-            placeholder="Notes"
-            value={quotation.notes}
-            onChange={(e) => updateField("notes", e.target.value)}
-          /> */}
-
-          {/* <Textarea
-            placeholder="Terms & Conditions"
-            value={quotation.terms}
-            onChange={(e) => updateField("terms", e.target.value)}
-          /> */}
-
         </CardContent>
       </Card>
 
@@ -410,11 +419,6 @@ export default function QuotationForm({
           <div className="flex items-center justify-between">
             <span>Subtotal</span>
             <span>{subtotal.toFixed(2)}</span>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <span>Total Tax</span>
-            <span>{taxTotal.toFixed(2)}</span>
           </div>
 
           <div className="flex items-center justify-between">
