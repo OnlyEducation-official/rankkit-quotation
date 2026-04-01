@@ -180,7 +180,7 @@ export default function QuotationPrint({ quotation }: Props) {
                 fontSize: "22px",
                 fontWeight: 700,
                 letterSpacing: "1.5px",
-                color: "#111827",
+                color: "#111827", 
               }}
             >
               QUOTATION
