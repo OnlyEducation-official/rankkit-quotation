@@ -174,7 +174,7 @@ export default function QuotationPrint({ quotation }: Props) {
             </p>
           </div>
 
-          <div style={{ textAlign: "right" }}>
+          <div style={{ textAlign: "right" }}> 
             <div
               style={{
                 fontSize: "22px",
