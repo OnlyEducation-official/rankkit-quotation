@@ -9,9 +9,6 @@ on:
 jobs:
   lint-and-build:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
-      PORT: 3000
 
     steps:
       - name: Checkout code
