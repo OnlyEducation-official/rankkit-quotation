@@ -32,7 +32,7 @@ export const COMPANY_PRESETS: Record<
         <p style="margin:0 0 8px 0;">2. Any additional work outside the agreed scope will be charged separately.</p>
         <p style="margin:0;">3. Payment terms will be mutually discussed before project initiation.</p>
       </div>
-    `,
+    `
   },
 
   "rankkit-studio": {
@@ -109,6 +109,6 @@ export const COMPANY_PRESETS: Record<
           </div>
         </div>
       </div>
-    `,
+    `
   },
 };
