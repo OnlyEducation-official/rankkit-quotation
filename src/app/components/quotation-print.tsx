@@ -399,7 +399,7 @@ th {
                         <td style={tdStyle}>{index + 1}</td>
                         <td style={{ ...tdStyle, fontWeight: 600 }}>{item.title}</td>
                         <td style={tdStyleRight}>{item.rate.toFixed(2)}</td>
-                        <td style={tdStyleRight}>{amount.toFixed(2)}</td>
+                        <td style={tdStyleRight}>{amount.toFixed(2)}</td> 
                       </tr>
 
                       <tr>
