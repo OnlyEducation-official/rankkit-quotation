@@ -46,250 +46,177 @@ export default function QuotationPrint({ quotation }: Props) {
       <style>
         {`
     @page {
-      size: A4;
-      margin: 0;
-    }
+  size: A4;
+  margin: 28mm 12mm 18mm 12mm;
+}
 
-    @media print {
-      html, body {
-        margin: 0;
-        padding: 0;
-        background: #fff;
-      }
+@media print {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 
-      .print-top-band,
-      .print-bottom-band {
-        position: fixed;
-        left: 0;
-        width: 100%;
-        z-index: 9999;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-      }
+  .print-top-band::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4mm;
 
-      .print-top-band::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4mm;
+  /* MAIN TOP STRIP (red → maroon → purple) */
+  background: linear-gradient(
+    90deg,
+    #b91c1c 0%,     /* deep red */
+    #be123c 40%,    /* rose */
+    #7e22ce 100%    /* purple */
+  );
+}
 
-        /* MAIN TOP STRIP (red → maroon → purple) */
-        background: linear-gradient(
-          90deg,
-          #b91c1c 0%,     /* deep red */
-          #be123c 40%,    /* rose */
-          #7e22ce 100%    /* purple */
-        );
-      }
+.print-top-band::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4mm;
+  width: 58mm;
+  height: 18mm;
 
-      .print-top-band::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 4mm;
-        width: 58mm;
-        height: 18mm;
+  /* ANGLED SHAPE (darker tone of same palette) */
+  background: linear-gradient(
+    135deg,
+    #7f1d1d 0%,     /* dark red */
+    #4c1d95 100%    /* deep purple */
+  );
 
-        /* ANGLED SHAPE (darker tone of same palette) */
-        background: linear-gradient(
-          135deg,
-          #7f1d1d 0%,     /* dark red */
-          #4c1d95 100%    /* deep purple */
-        );
+  clip-path: polygon(0 0, 100% 0, 78% 100%, 0 100%);
+}
 
-        clip-path: polygon(0 0, 100% 0, 78% 100%, 0 100%);
-      }
+  .print-bottom-band {
+  bottom: 0;
+  height: 14mm;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
 
-      .print-bottom-band {
-        bottom: 0;
-        height: 14mm;
-        background: #ffffff;
-        border-top: 1px solid #e5e7eb;
-      }
+/* MAIN BOTTOM STRIP */
+.print-bottom-band::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5mm;
 
-      .print-bottom-band::before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 3.5mm;
-        background: linear-gradient(90deg, #111827 0%, #4f46e5 45%, #7c3aed 100%);
-      }
+  background: linear-gradient(
+    90deg,
+    #b91c1c 0%,     /* deep red */
+    #be123c 40%,    /* rose */
+    #7e22ce 100%    /* purple */
+  );
+}
 
-      .print-bottom-band::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        bottom: 3.5mm;
-        width: 42mm;
-        height: 10.5mm;
-        background: linear-gradient(135deg, #312e81 0%, #111827 100%);
-        clip-path: polygon(22% 0, 100% 0, 100% 100%, 0 100%);
-      }
+/* ANGLED ACCENT (RIGHT SIDE) */
+.print-bottom-band::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 3.5mm;
+  width: 42mm;
+  height: 10.5mm;
 
-      /* MAIN BOTTOM STRIP */
-      .print-bottom-band::before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 3.5mm;
+  background: linear-gradient(
+    135deg,
+    #4c1d95 0%,     /* deep purple */
+    #7f1d1d 100%    /* dark red */
+  );
 
-        background: linear-gradient(
-          90deg,
-          #b91c1c 0%,     /* deep red */
-          #be123c 40%,    /* rose */
-          #7e22ce 100%    /* purple */
-        );
-      }
+  clip-path: polygon(22% 0, 100% 0, 100% 100%, 0 100%);
+}
 
-      /* ANGLED ACCENT (RIGHT SIDE) */
-      .print-bottom-band::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        bottom: 3.5mm;
-        width: 42mm;
-        height: 10.5mm;
+  .print-content {
+    padding: 0;
+    position: relative;
+  }
 
-        background: linear-gradient(
-          135deg,
-          #4c1d95 0%,     /* deep purple */
-          #7f1d1d 100%    /* dark red */
-        );
+  .page-watermark {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 
-        clip-path: polygon(22% 0, 100% 0, 100% 100%, 0 100%);
-      }
+  .page-watermark img {
+    width: 95mm;
+    max-width: 55%;
+    opacity: 0.05;
+    transform: rotate(-28deg);
+    object-fit: contain;
+  }
 
-      .print-brand-label {
-        position: fixed;
-        top: 8mm;
-        right: 12mm;
-        z-index: 10000;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 1.8px;
-        text-transform: uppercase;
-        color: #374151;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-      }
+  .page-layer {
+    position: relative;
+    z-index: 1;
+  }
 
-      .print-content {
-        padding-top: 28mm;
-        padding-right: 12mm;
-        padding-bottom: 20mm;
-        padding-left: 12mm;
-        position: relative;
-      }
+  table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-      .page-watermark {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-      }
+thead {
+  display: table-header-group;
+}
 
-      .page-watermark img {
-        width: 95mm;
-        max-width: 55%;
-        opacity: 0.05;
-        transform: rotate(-28deg);
-        object-fit: contain;
-      }
+tfoot {
+  display: table-footer-group;
+}
 
-      .page-layer {
-        position: relative;
-        z-index: 1;
-      }
+/* Let table rows split when needed */
+tr,
+td,
+th {
+  page-break-inside: auto;
+  break-inside: auto;
+}
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
+/* Keep only these sections together */
+.avoid-break,
+.summary-box,
+.notes-box,
+.signature-box,
+.terms-section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
 
-      thead {
-        display: table-row-group;
-      }
+/* Allow description content to flow across pages */
+.quotation-description,
+.quotation-description * {
+  page-break-inside: auto;
+  break-inside: auto;
+}
 
-      tfoot {
-        display: table-footer-group;
-      }
-
-      tr, td, th {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .avoid-break {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .item-group {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .summary-box,
-      .notes-box,
-      .signature-box,
-      .quotation-description,
-      .terms-page,
-      .terms-section {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .terms-page {
-        break-before: page;
-        page-break-before: always;
-      }
-    }
-
-    .quotation-description p {
-      margin: 0 0 6px 0;
-      line-height: 1.5;
-    }
-
-    .quotation-description ul,
-    .quotation-description ol {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .quotation-description li {
-      margin: 0 0 6px 0;
-      line-height: 1.5;
-    }
-
-    .terms-section p {
-      margin: 0 0 10px 0;
-      line-height: 1.6;
-    }
-
-    .terms-section ul,
-    .terms-section ol {
-      margin: 0 0 10px 0;
-      padding-left: 18px;
-    }
-
-    .terms-section li {
-      margin: 0 0 8px 0;
-      line-height: 1.6;
-    }
+.terms-page {
+  break-before: page;
+  page-break-before: always;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+}
   `}
       </style>
-      <div className="print-top-band" />
 
       <div className="page-watermark">
         <img src={watermarkLogo} alt="Watermark" />
@@ -460,44 +387,46 @@ export default function QuotationPrint({ quotation }: Props) {
                 </tr>
               </thead>
 
-              {quotation.items.map((item, index) => {
-                const amount =
-                  item.quantity * item.rate +
-                  item.quantity * item.rate * (item.taxPercent / 100);
+              <tbody>
+                {quotation.items.map((item, index) => {
+                  const amount =
+                    item.quantity * item.rate +
+                    item.quantity * item.rate * (item.taxPercent / 100);
 
-                return (
-                  <tbody key={item.id} className="item-group">
-                    <tr>
-                      <td style={tdStyle}>{index + 1}</td>
-                      <td style={{ ...tdStyle, fontWeight: 600 }}>{item.title}</td>
-                      <td style={tdStyleRight}>{item.rate.toFixed(2)}</td>
-                      <td style={tdStyleRight}>{amount.toFixed(2)}</td>
-                    </tr>
+                  return (
+                    <React.Fragment key={item.id}>
+                      <tr>
+                        <td style={tdStyle}>{index + 1}</td>
+                        <td style={{ ...tdStyle, fontWeight: 600 }}>{item.title}</td>
+                        <td style={tdStyleRight}>{item.rate.toFixed(2)}</td>
+                        <td style={tdStyleRight}>{amount.toFixed(2)}</td>
+                      </tr>
 
-                    <tr>
-                      <td style={{ ...tdStyle, borderBottom: "1px solid #e5e7eb" }} />
-                      <td
-                        colSpan={3}
-                        style={{
-                          ...tdStyle,
-                          fontSize: "13px",
-                          paddingTop: "8px",
-                          paddingBottom: "10px",
-                          background: "#f9fafb",
-                          borderRadius: "6px",
-                          padding: "10px",
-                          border: "1px solid #f1f5f9",
-                        }}
-                      >
-                        <div
-                          className="quotation-description"
-                          dangerouslySetInnerHTML={{ __html: item.description }}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })}
+                      <tr>
+                        <td style={{ ...tdStyle, borderBottom: "1px solid #e5e7eb" }} />
+                        <td
+                          colSpan={3}
+                          style={{
+                            ...tdStyle,
+                            fontSize: "13px",
+                            paddingTop: "8px",
+                            paddingBottom: "10px",
+                            background: "transparent",
+                            borderRadius: "6px",
+                            padding: "10px",
+                            border: "1px solid #f1f5f9",
+                          }}
+                        >
+                          <div
+                            className="quotation-description"
+                            dangerouslySetInnerHTML={{ __html: item.description }}
+                          />
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  );
+                })}
+              </tbody>
             </table>
 
             <div
@@ -576,12 +505,7 @@ export default function QuotationPrint({ quotation }: Props) {
           </div>
 
           <div
-            className="terms-page"
-            style={{
-              marginTop: "70px",
-              paddingTop: "8mm",
-            }}
-          >
+            className="terms-page">
             <div
               style={{
                 border: "1px solid #e5e7eb",
@@ -654,7 +578,6 @@ export default function QuotationPrint({ quotation }: Props) {
         </div>
       </div>
 
-      <div className="print-bottom-band" />
     </div>
   );
 }
