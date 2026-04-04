@@ -398,8 +398,18 @@ th {
                       <tr>
                         <td style={tdStyle}>{index + 1}</td>
                         <td style={{ ...tdStyle, fontWeight: 600 }}>{item.title}</td>
-                        <td style={tdStyleRight}>{item.rate.toFixed(2)}</td>
-                        <td style={tdStyleRight}>{amount.toFixed(2)}</td> 
+                        <td style={tdStyleRight}>
+                          {item.rate.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </td>
+                        <td style={tdStyleRight}>
+                          {amount.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </td>
                       </tr>
 
                       <tr>
@@ -476,15 +486,12 @@ th {
               >
                 <div style={summaryRow}>
                   <span>Subtotal</span>
-                  <span>{subtotal.toFixed(2)}</span>
-                </div>
-                <div style={summaryRow}>
-                  <span>Tax</span>
-                  <span>{taxTotal.toFixed(2)}</span>
-                </div>
-                <div style={summaryRow}>
-                  <span>Discount</span>
-                  <span>{(quotation.discount || 0).toFixed(2)}</span>
+                  <span>
+                    {subtotal.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
                 </div>
                 <div
                   style={{
@@ -498,7 +505,12 @@ th {
                   }}
                 >
                   <span>Estimated Total</span>
-                  <span>{grandTotal.toFixed(2)}</span>
+                  <span>
+                    {grandTotal.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
                 </div>
               </div>
             </div>

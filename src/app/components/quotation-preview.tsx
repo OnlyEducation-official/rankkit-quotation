@@ -110,9 +110,19 @@ export default function QuotationPreview({ quotation }: Props) {
                                         />
                                     </td>
                                     {/* <td style={tdStyleRight}>{item.quantity}</td> */}
-                                    <td style={tdStyleRight}>{item.rate.toFixed(2)}</td>
+                                    <td style={tdStyleRight}>
+                                        {item.rate.toLocaleString(undefined, {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        })}
+                                    </td>
                                     {/* <td style={tdStyleRight}>{item.taxPercent}</td> */}
-                                    <td style={tdStyleRight}>{amount.toFixed(2)}</td>
+                                    <td style={tdStyleRight}>
+                                        {amount.toLocaleString(undefined, {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        })}
+                                    </td>
                                 </tr>
                             );
                         })}
@@ -122,15 +132,12 @@ export default function QuotationPreview({ quotation }: Props) {
                 <div style={{ marginLeft: "auto", width: "100%", maxWidth: "320px", marginBottom: "24px" }}>
                     <div style={rowStyle}>
                         <span>Subtotal</span>
-                        <span>{subtotal.toFixed(2)}</span>
-                    </div>
-                    <div style={rowStyle}>
-                        <span>Tax</span>
-                        <span>{taxTotal.toFixed(2)}</span>
-                    </div>
-                    <div style={rowStyle}>
-                        <span>Discount</span>
-                        <span>{(quotation.discount || 0).toFixed(2)}</span>
+                        <span>
+                            {subtotal.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            })}
+                        </span>
                     </div>
                     <div
                         style={{
@@ -141,19 +148,14 @@ export default function QuotationPreview({ quotation }: Props) {
                         }}
                     >
                         <span>Grand Total</span>
-                        <span>{grandTotal.toFixed(2)}</span>
+                        <span>
+                            {grandTotal.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            })}
+                        </span>
                     </div>
                 </div>
-
-                {/* <div style={{ marginTop: "24px" }}>
-                    <p style={{ margin: "8px 0" }}>
-                        <strong>Notes:</strong> {quotation.notes}
-                    </p>
-                    <div
-                        style={{ fontSize: "14px", lineHeight: 1.6 }}
-                        dangerouslySetInnerHTML={{ __html: quotation.terms }}
-                    />
-                </div> */}
             </div>
         </div>
     );

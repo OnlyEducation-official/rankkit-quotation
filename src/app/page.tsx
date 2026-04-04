@@ -10,6 +10,10 @@ import QuotationPreview from "./components/quotation-preview";
 
 const defaultCompany = COMPANY_PRESETS["rankkit-media"];
 
+const today = new Date();
+const expiryDate = new Date();
+expiryDate.setDate(today.getDate() + 7);
+
 const initialQuotation: QuotationData = {
   companyType: "rankkit-media",
 
@@ -25,7 +29,7 @@ const initialQuotation: QuotationData = {
 
   quotationNumber: "QT-001",
   quotationDate: new Date().toISOString().split("T")[0],
-  validTill: "",
+  validTill: expiryDate.toISOString().split("T")[0],
 
   items: [
     {

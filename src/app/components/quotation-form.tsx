@@ -47,6 +47,12 @@ const createEmptyItem = (): QuotationItem => ({
 const createInitialQuotation = (): QuotationData => {
   const preset = COMPANY_PRESETS["rankkit-media"];
 
+  const today = new Date();
+  const expiryDate = new Date();
+  expiryDate.setDate(today.getDate() + 7);
+
+  console.log("expiryDate:",expiryDate)
+
   return {
     companyType: "rankkit-media",
     companyName: preset.companyName,
@@ -60,8 +66,8 @@ const createInitialQuotation = (): QuotationData => {
     clientEmail: "",
 
     quotationNumber: "QT-001",
-    quotationDate: new Date().toISOString().split("T")[0],
-    validTill: "",
+    quotationDate: today.toISOString().split("T")[0],
+    validTill: expiryDate.toISOString().split("T")[0],
 
     items: [createEmptyItem()],
 
@@ -318,6 +324,7 @@ export default function QuotationForm({
             </label>
             <Input
               type="date"
+              // If validTill is undefined or null, default to empty string to avoid errors
               value={quotation.validTill}
               onChange={(e) => updateField("validTill", e.target.value)}
             />
