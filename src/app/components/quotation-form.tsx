@@ -145,7 +145,7 @@ export default function QuotationForm({
 
   const grandTotal = subtotal + taxTotal - (quotation.discount || 0);
 
-  const handleCompanyChange = (value: "rankkit-media" | "rankkit-studio") => {
+  const handleCompanyChange = (value: "rankkit-media" | "rankkit-studio" | "both") => {
     const preset = COMPANY_PRESETS[value];
 
     setQuotation((prev) => ({
@@ -230,7 +230,7 @@ export default function QuotationForm({
           <Select
             value={quotation.companyType}
             onValueChange={(value) =>
-              handleCompanyChange(value as "rankkit-media" | "rankkit-studio")
+              handleCompanyChange(value as "rankkit-media" | "rankkit-studio" | "both")
             }
           >
             <SelectTrigger>
@@ -239,6 +239,7 @@ export default function QuotationForm({
             <SelectContent>
               <SelectItem value="rankkit-media">Rankkit Media</SelectItem>
               <SelectItem value="rankkit-studio">Rankkit Studio</SelectItem>
+              <SelectItem value="both">Both</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -320,7 +321,7 @@ export default function QuotationForm({
           {/* Valid Till */}
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-gray-700">
-              Valid Till
+              Quotation Valid Till
             </label>
             <Input
               type="date"
@@ -334,7 +335,7 @@ export default function QuotationForm({
 
       <Card>
         <CardHeader>
-          <CardTitle>Items / Services</CardTitle>
+          <CardTitle>Services</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {quotation.items.map((item, index) => (
@@ -343,7 +344,7 @@ export default function QuotationForm({
               className="rounded-xl border p-4 space-y-4 bg-muted/20"
             >
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium">Item {index + 1}</h3>
+                <h3 className="text-sm font-medium">Service {index + 1}</h3>
                 <Button
                   type="button"
                   variant="ghost"
@@ -356,7 +357,7 @@ export default function QuotationForm({
                 </Button>
               </div>
 
-              <p>Title</p>
+              <p>Service Name</p>
 
               <Input
                 placeholder="Title"
@@ -366,7 +367,7 @@ export default function QuotationForm({
                 }
               />
 
-              <p>Description</p>
+              <p>Service Description</p>
 
               <RichTextEditor
                 value={item.description}
@@ -377,7 +378,7 @@ export default function QuotationForm({
                 {/* Rate */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm font-medium text-gray-700">
-                    Rate
+                    Amount
                   </label>
                   <Input
                     type="number"

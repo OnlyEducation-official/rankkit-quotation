@@ -1,4 +1,4 @@
-export type CompanyType = "rankkit-media" | "rankkit-studio";
+export type CompanyType = "rankkit-media" | "rankkit-studio" | "both";
 
 export type QuotationItem = {
   id: string;
