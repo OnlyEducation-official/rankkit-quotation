@@ -360,7 +360,7 @@ export default function QuotationForm({
               <p>Service Name</p>
 
               <Input
-                placeholder="Title"
+                placeholder="Enter Service Name"
                 value={item.title}
                 onChange={(e) =>
                   updateItem(item.id, "title", e.target.value)
