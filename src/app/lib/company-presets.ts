@@ -48,6 +48,21 @@ export const COMPANY_PRESETS: Record<
         <p style="margin: 0; font-size: 15px;">Payment terms will be mutually discussed and finalized before project initiation.</p>
       </div>
 
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">04</span>
+        <p style="margin: 0; font-size: 15px;">50% advance payment required to confirm.</p>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">05</span>
+        <p style="margin: 0; font-size: 15px;">Re-scheduling must be addressed in advance.</p>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">06</span>
+        <p style="margin: 0; font-size: 15px;">Last-minute cancellations are non-refundable.</p>
+      </div>
+
     </div>
   </div>
 
