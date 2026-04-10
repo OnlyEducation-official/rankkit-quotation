@@ -69,7 +69,7 @@ export default function HomePage() {
     } catch (error) {
       console.error("Failed to load quotation draft:", error);
     }
-  }, []);
+  }, []); 
 
   useEffect(() => {
     try {
