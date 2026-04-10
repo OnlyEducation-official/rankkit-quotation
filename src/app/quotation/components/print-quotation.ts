@@ -1,7 +1,7 @@
 "use client";
 
 import { createRoot } from "react-dom/client";
-import { QuotationData } from "../types/quotation";
+import { QuotationData } from "../../types/quotation";
 import React from "react";
 import QuotationPrint from "./quotation-print";
 

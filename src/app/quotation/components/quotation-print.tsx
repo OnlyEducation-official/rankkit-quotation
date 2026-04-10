@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { QuotationData } from "../types/quotation";
+import { QuotationData } from "../../types/quotation";
 
 type Props = {
   quotation: QuotationData;

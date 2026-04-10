@@ -1,13 +1,13 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { Plus, Trash2, Download, RotateCcw } from "lucide-react";
-
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { QuotationData, QuotationItem } from "../types/quotation";
+import { QuotationData, QuotationItem } from "../../types/quotation";
 import RichTextEditor from "./rich-text-editor";
 import {
   Select,
@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { COMPANY_PRESETS } from "../lib/company-presets";
+import { COMPANY_PRESETS } from "../../lib/company-presets";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -51,7 +51,7 @@ const createInitialQuotation = (): QuotationData => {
   const expiryDate = new Date();
   expiryDate.setDate(today.getDate() + 7);
 
-  console.log("expiryDate:",expiryDate)
+  console.log("expiryDate:", expiryDate)
 
   return {
     companyType: "rankkit-media",
@@ -124,6 +124,7 @@ export default function QuotationForm({
   };
 
   const resetForm = () => {
+    localStorage.removeItem("quotation_draft");
     setQuotation(createInitialQuotation());
   };
 
@@ -426,7 +427,12 @@ export default function QuotationForm({
         <CardContent className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
             <span>Subtotal</span>
-            <span>{subtotal.toFixed(2)}</span>
+            <span>
+              {subtotal.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </div>
 
           <div className="flex items-center justify-between">
@@ -436,7 +442,12 @@ export default function QuotationForm({
 
           <div className="flex items-center justify-between border-t pt-3 text-base font-semibold">
             <span>Grand Total</span>
-            <span>{grandTotal.toFixed(2)}</span>
+            <span>
+              {grandTotal.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </div>
         </CardContent>
       </Card>
