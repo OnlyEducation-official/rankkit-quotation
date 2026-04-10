@@ -341,7 +341,7 @@ export default function QuotationForm({
         <CardContent className="space-y-4">
           {quotation.items.map((item, index) => (
             <div
-              key={item.id}
+              key={item.id || `item-${index}`}
               className="rounded-xl border p-4 space-y-4 bg-muted/20"
             >
               <div className="flex items-center justify-between">

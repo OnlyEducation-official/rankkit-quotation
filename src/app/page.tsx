@@ -1,11 +1,6 @@
-import React from 'react'
-import HomePage from './quotation/page'
+import dynamic from "next/dynamic";
+import HomePage from "./quotation/page";
 
-export default async function page() {
-
-  return (
-    <div>
-      <HomePage />
-    </div>
-  )
+export default function Page() {
+  return <HomePage />;
 }
