@@ -14,6 +14,49 @@ const BRAND_WATERMARKS: Record<string, string> = {
     "/studio_logo.png",
 };
 
+function escapeHtml(value: string) {
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+function buildCustomTermsHtml(customTerms: string[]) {
+    if (!Array.isArray(customTerms) || customTerms.length === 0) return "";
+
+    return `
+    <div style="margin-top: 16px;">
+      <div style="font-weight: 700; color: #111827; margin-bottom: 4px;">
+        Additional Terms
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        ${customTerms
+        .map(
+          (term) => `
+              <div style="display: flex; gap: 8px; align-items: flex-start;">
+                <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">•</span>
+                <p style="margin: 0; ">${escapeHtml(term)}</p>
+              </div>
+            `
+        )
+        .join("")}
+      </div>
+    </div>
+  `;
+  }
+
+export function getMergedTermsHtml(quotation: QuotationData) {
+    const fallback =
+      "<p>Prices are subject to confirmation and validity period mentioned above.</p>";
+
+    const termsHtml = quotation.terms || fallback;
+    const customTermsHtml = buildCustomTermsHtml(quotation.customTerms || []);
+
+    return termsHtml.replace("{{CUSTOM_TERMS}}", customTermsHtml);
+  }
+
 export default function QuotationPrint({ quotation }: Props) {
   const subtotal = quotation.items.reduce(
     (sum, item) => sum + item.quantity * item.rate,
@@ -29,7 +72,6 @@ export default function QuotationPrint({ quotation }: Props) {
 
   const companyKey = (quotation.companyName || "").trim().toLowerCase();
   const watermarkLogo = BRAND_WATERMARKS[companyKey] || "";
-  console.log(watermarkLogo)
 
   return (
     <div
@@ -544,26 +586,22 @@ th {
                   marginBottom: "50px",
                 }}
                 dangerouslySetInnerHTML={{
-                  __html:
-                    quotation.terms ||
-                    "<p>Prices are subject to confirmation and validity period mentioned above.</p>",
+                  __html: getMergedTermsHtml(quotation),
                 }}
               />
 
               <div
                 className="signature-box avoid-break"
                 style={{
-                  marginTop: "60px",
                   display: "flex",
                   justifyContent: "space-between",
-                  gap: "40px",
                 }}
               >
                 <div style={{ width: "240px" }}>
                   <div
                     style={{
                       borderTop: "1px solid #d1d5db",
-                      paddingTop: "8px",
+                      paddingTop: "6px",
                       fontSize: "13px",
                       color: "#374151",
                     }}
@@ -576,7 +614,7 @@ th {
                   <div
                     style={{
                       borderTop: "1px solid #d1d5db",
-                      paddingTop: "8px",
+                      paddingTop: "6px",
                       fontSize: "13px",
                       color: "#374151",
                     }}

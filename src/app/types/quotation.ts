@@ -32,4 +32,5 @@ export type QuotationData = {
   discount: number;
   notes: string;
   terms: string;
+  customTerms:string[]
 };

@@ -46,12 +46,14 @@ function createInitialQuotation(): QuotationData {
     discount: 0,
     notes: defaultCompany.notes,
     terms: defaultCompany.terms,
+    customTerms: []
   };
 }
 
 export default function QuotationPageClient() {
   const [mounted, setMounted] = useState(false);
   const [quotation, setQuotation] = useState<QuotationData>(createInitialQuotation);
+
 
   useEffect(() => {
     try {
@@ -64,12 +66,15 @@ export default function QuotationPageClient() {
           ...prev,
           ...parsed,
           items:
-            parsed.items && parsed.items.length > 0
+            Array.isArray(parsed.items) && parsed.items.length > 0
               ? parsed.items.map((item, index) => ({
-                  ...item,
-                  id: item.id || `restored-item-${index}`,
-                }))
+                ...item,
+                id: item.id || `restored-item-${index}`,
+              }))
               : prev.items,
+          customTerms: Array.isArray(parsed.customTerms)
+            ? parsed.customTerms
+            : [],
         }));
       }
     } catch (error) {

@@ -46,7 +46,6 @@ import {
 } from "@lexical/link";
 
 import {
-  $createListNode,
   $isListNode,
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -387,7 +386,24 @@ function HtmlSyncPlugin({
       if (nodes.length === 0) {
         root.append($createParagraphNode());
       } else {
-        root.append(...nodes);
+        const paragraph = $createParagraphNode();
+
+        for (const node of nodes) {
+          const type = node.getType();
+
+          if (type === "text" || type === "linebreak") {
+            paragraph.append(node);
+          } else {
+            if (paragraph.getChildrenSize() > 0) {
+              root.append(paragraph);
+            }
+            root.append(node);
+          }
+        }
+
+        if (paragraph.getChildrenSize() > 0) {
+          root.append(paragraph);
+        }
       }
 
       lastHtmlRef.current = incoming;

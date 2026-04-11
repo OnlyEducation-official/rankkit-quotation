@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { QuotationData } from "../../types/quotation";
+import { getMergedTermsHtml } from "./quotation-print";
 
 type Props = {
     quotation: QuotationData;
@@ -156,6 +157,18 @@ export default function QuotationPreview({ quotation }: Props) {
                         </span>
                     </div>
                 </div>
+
+                <div
+                className="terms-section"
+                style={{
+                  fontSize: "14px",
+                  lineHeight: 1.6,
+                  marginBottom: "50px",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: getMergedTermsHtml(quotation),
+                }}
+              />
             </div>
         </div>
     );

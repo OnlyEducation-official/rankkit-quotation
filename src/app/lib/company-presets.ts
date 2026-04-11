@@ -19,58 +19,45 @@ export const COMPANY_PRESETS: Record<
     notes:
       "Thank you for the opportunity to submit this quotation. We look forward to working with you.",
     terms: `
-      <div style="font-family: 'Inter', system-ui, -apple-system, sans-serif; max-width: 650px; margin: 40px auto; color: #1f2937; line-height: 1.6;">
+  <div style="font-family: 'Inter', system-ui, -apple-system, sans-serif; max-width: 650px; margin: 40px auto; color: #1f2937; line-height: 1.6;">
   
-  <div style="text-align: center; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #e5e7eb;">
-    <h2 style="font-size: 28px; font-weight: 800; color: #111827; margin: 0 0 8px 0; letter-spacing: -0.025em;">
-      Terms &amp; Conditions
-    </h2>
-    <p style="font-size: 14px; color: #6b7280; margin: 0;">
-      Please read our guidelines carefully to ensure a smooth and creative experience.
-    </p>
-  </div>
+    <div style="text-align: center; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #e5e7eb;">
+      <h2 style="font-size: 28px; font-weight: 800; color: #111827; margin: 0 0 8px 0; letter-spacing: -0.025em;">
+        Terms &amp; Conditions
+      </h2>
+      <p style="font-size: 14px; color: #6b7280; margin: 0;">
+        Please read our guidelines carefully to ensure a smooth and creative experience.
+      </p>
+    </div>
 
-  <div style="background-color: #f9fafb; border: 1px solid #f3f4f6; border-radius: 12px; padding: 24px;">
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
-        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">01</span>
-        <p style="margin: 0; font-size: 15px;">This quotation is valid for <span style="font-weight: 600;">7 days</span> from the date of issue.</p>
+    <div style="background-color: #f9fafb; border: 1px solid #f3f4f6; border-radius: 12px; padding: 24px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">01</span>
+          <p style="margin: 0; font-size: 15px;">This quotation is valid for <span style="font-weight: 600;">7 days</span> from the date of issue.</p>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">02</span>
+          <p style="margin: 0; font-size: 15px;">Any additional work outside the agreed scope will be charged separately.</p>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">03</span>
+          <p style="margin: 0; font-size: 15px;">Payment terms will be mutually discussed and finalized before project initiation.</p>
+        </div>
+
+        {{CUSTOM_TERMS}}
+
       </div>
+    </div>
 
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
-        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">02</span>
-        <p style="margin: 0; font-size: 15px;">Any additional work outside the agreed scope will be charged separately.</p>
-      </div>
-
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
-        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">03</span>
-        <p style="margin: 0; font-size: 15px;">Payment terms will be mutually discussed and finalized before project initiation.</p>
-      </div>
-
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
-        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">04</span>
-        <p style="margin: 0; font-size: 15px;">50% advance payment required to confirm.</p>
-      </div>
-
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
-        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">05</span>
-        <p style="margin: 0; font-size: 15px;">Re-scheduling must be addressed in advance.</p>
-      </div>
-
-      <div style="display: flex; gap: 12px; align-items: flex-start;">
-        <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">06</span>
-        <p style="margin: 0; font-size: 15px;">Last-minute cancellations are non-refundable.</p>
-      </div>
-
+    <div style="margin-top: 16px; text-align: right;">
+      <span style="font-size: 12px; color: #9ca3af; font-style: italic;">Thank you for your business.</span>
     </div>
   </div>
-
-  <div style="margin-top: 16px; text-align: right;">
-    <span style="font-size: 12px; color: #9ca3af; font-style: italic;">Thank you for your business.</span>
-  </div>
-</div>
-    `
+`
   },
   "rankkit-studio": {
     companyName: "Rankkit Studio",
@@ -80,75 +67,224 @@ export const COMPANY_PRESETS: Record<
     notes:
       "Thank you for considering Rankkit Studio for your production requirement. We would be happy to support your project.",
     terms: `
-      <div style="font-family: 'Inter', Arial, sans-serif; color: #111827; max-width: 900px; margin: 0 auto; padding: 20px;">
-  <div style="text-align: center; margin-bottom: 40px;">
-    <div style="font-size: 12px; font-weight: 700; letter-spacing: 1.5px; color: #1e3a8a; text-transform: uppercase; margin-bottom: 8px;">
-      Studio Policy
-    </div>
-    <div style="font-size: 36px; font-weight: 800; line-height: 1.1; margin-bottom: 12px; color: #111827;">
-      Terms & Conditions
-    </div>
-    <div style="font-size: 15px; color: #6b7280; max-width: 500px; margin: 0 auto;">
-      Please read our guidelines carefully to ensure a smooth and creative experience for everyone.
-    </div>
-  </div>
+      <div style="
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    max-width: 760px;
+    margin: 0 auto;
+    color: #1f2937;
+    line-height: 1.45;
+    padding: 8px 10px;
+    box-sizing: border-box;
+  ">
 
-  <div style="border: 1px solid #f59e0b; background: #fff7ed; border-radius: 12px; padding: 16px 20px; margin-bottom: 32px; display: flex; align-items: center; gap: 12px;">
-    <div style="font-size: 20px;">⚠️</div>
-    <div>
-      <div style="font-weight: 700; color: #92400e; font-size: 15px;">Strict Prohibition</div>
-      <div style="font-size: 14px; color: #78350f; line-height: 1.5;">
-        Use of paint, flour, or any form of powder/liquid is strictly prohibited in the studio to maintain equipment safety.
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 18px;">
+      <div style="
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #1e3a8a;
+        margin-bottom: 6px;
+      ">
+        Studio Policy
+      </div>
+
+      <h1 style="
+        font-size: 28px;
+        font-weight: 800;
+        color: #111827;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      ">
+        Terms &amp; Conditions
+      </h1>
+
+      <p style="
+        font-size: 13px;
+        color: #6b7280;
+        margin: 0 auto;
+        max-width: 620px;
+      ">
+        Please read these guidelines carefully to ensure a smooth and professional studio experience.
+      </p>
+    </div>
+
+    <!-- Policy Grid -->
+    <div style="
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    ">
+
+      <div style="
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+        page-break-inside: avoid;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="font-size: 16px; color: #1e3a8a;">◷</div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">Time &amp; Booking</h3>
+        </div>
+        <div style="height: 1px; background: #e5e7eb; margin-bottom: 5px;"></div>
+        <ul style="
+          margin: 0;
+          padding-left: 18px;
+          color: #1f2937;
+          font-size: 12px;
+          line-height: 1.45;
+        ">
+          <li style="margin-bottom: 5px;">Rental starts from the confirmed booking time.</li>
+          <li style="margin-bottom: 5px;">A 10-minute grace period is allowed for pack-up.</li>
+          <li style="margin-bottom: 5px;">Exceeding the grace period may attract an extra hour charge.</li>
+          <li>Clients must vacate on time if another booking follows.</li>
+        </ul>
+      </div>
+
+      <div style="
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+        page-break-inside: avoid;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="font-size: 16px; color: #1e3a8a;">⌂</div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">House Rules &amp; Hygiene</h3>
+        </div>
+        <div style="height: 1px; background: #e5e7eb; margin-bottom: 5px;"></div>
+        <ul style="
+          margin: 0;
+          padding-left: 18px;
+          color: #1f2937;
+          font-size: 12px;
+          line-height: 1.45;
+        ">
+          <li style="margin-bottom: 8px;">Do not litter the studio with food or waste.</li>
+          <li style="margin-bottom: 8px;">All mess must be cleaned before leaving.</li>
+          <li>Mess-causing powders or liquids are not allowed.</li>
+        </ul>
+      </div>
+
+      <div style="
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+        page-break-inside: avoid;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="font-size: 16px; color: #dc2626;">⚒</div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">Liability &amp; Damages</h3>
+        </div>
+        <div style="height: 1px; background: #e5e7eb; margin-bottom: 5px;"></div>
+        <ul style="
+          margin: 0;
+          padding-left: 18px;
+          color: #1f2937;
+          font-size: 12px;
+          line-height: 1.45;
+        ">
+          <li style="margin-bottom: 8px;">The client is responsible for any damage during the session.</li>
+          <li>All identified damages will be chargeable.</li>
+        </ul>
+      </div>
+
+      <div style="
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+        page-break-inside: avoid;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="font-size: 16px; color: #1e3a8a;">👥</div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">Capacity &amp; Logistics</h3>
+        </div>
+        <div style="height: 1px; background: #e5e7eb; margin-bottom: 5px;"></div>
+        <ul style="
+          margin: 0;
+          padding-left: 18px;
+          color: #1f2937;
+          font-size: 12px;
+          line-height: 1.45;
+        ">
+          <li style="margin-bottom: 8px;">Maximum occupancy is 10 to 13 people including crew.</li>
+          <li>Parking is available for cars and bikes.</li>
+        </ul>
       </div>
     </div>
-  </div>
 
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-    
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; background: #f9fafb;">
-      <div style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e3a8a; display: flex; align-items: center; gap: 8px;">
-        General Policies
+    <!-- Commercial Terms -->
+    <div style="
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #f9fafb;
+      padding: 16px;
+      box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+      page-break-inside: avoid;
+    ">
+      <div style="
+        text-align: center;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #e5e7eb;
+      ">
+        <h2 style="
+          font-size: 20px;
+          font-weight: 800;
+          color: #111827;
+          margin: 0 0 4px 0;
+          letter-spacing: -0.02em;
+        ">
+          Commercial Terms
+        </h2>
+        <p style="
+          font-size: 12px;
+          color: #6b7280;
+          margin: 0;
+        ">
+          Please review the following commercial terms before confirmation.
+        </p>
       </div>
-      <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 13.5px; color: #374151;">
-        <li style="margin-bottom: 8px;">Quotation valid for <strong>7 days</strong> from issue.</li>
-        <li style="margin-bottom: 8px;">Additional work outside scope is charged separately.</li>
-        <li style="margin-bottom: 8px;"><strong>50% advance</strong> payment required to confirm.</li>
-        <li style="margin-bottom: 8px;">Re-scheduling must be addressed in advance.</li>
-        <li>Last-minute cancellations are non-refundable.</li>
-      </ul>
+
+      <div style="display: flex; flex-direction: column; ">
+
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 18px; font-size: 12px;">01</span>
+          <p style="margin: 0; font-size: 12px;">This quotation is valid for <span style="font-weight: 600;">7 days</span> from the date of issue.</p>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 18px; font-size: 12px;">02</span>
+          <p style="margin: 0; font-size: 12px;">Any additional work outside the agreed scope will be charged separately.</p>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 18px; font-size: 12px;">03</span>
+          <p style="margin: 0; font-size: 12px;">Payment terms will be mutually discussed and finalized before project initiation.</p>
+        </div>
+
+        {{CUSTOM_TERMS}}
+
+      </div>
     </div>
 
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e3a8a;">Time & Booking</div>
-      <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 13.5px; color: #4b5563;">
-        <li style="margin-bottom: 8px;">Rental starts from confirmed time, not arrival.</li>
-        <li style="margin-bottom: 8px;">20-30 mins wrap-up time included.</li>
-        <li style="margin-bottom: 8px;">Exceeding grace period incurs a full hour charge.</li>
-        <li>Must vacate promptly if a subsequent client is booked.</li>
-      </ul>
-    </div>
-
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e3a8a;">House Rules & Hygiene</div>
-      <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 13.5px; color: #4b5563;">
-        <li style="margin-bottom: 8px;">Do not litter; keeping the space clean is your responsibility.</li>
-        <li style="margin-bottom: 8px;">Ensure all mess is cleaned before leaving.</li>
-        <li>Strict prohibition of mess-causing liquids or powders.</li>
-      </ul>
-    </div>
-
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e3a8a;">Liability & Capacity</div>
-      <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 13.5px; color: #4b5563;">
-        <li style="margin-bottom: 8px;">Client is liable for <strong>all damages</strong> during session.</li>
-        <li style="margin-bottom: 8px;">Damages must be paid for immediately.</li>
-        <li style="margin-bottom: 8px;">Max occupancy: <strong>12-15 people</strong>.</li>
-        <li>Ample parking available for cars and bikes.</li>
-      </ul>
+    <div style="margin-top: 10px; text-align: right;">
+      <span style="font-size: 11px; color: #9ca3af; font-style: italic;">
+        Thank you for your business.
+      </span>
     </div>
 
   </div>
-</div>
     `
   }, "both": {
     companyName: "Rankkit Media",
@@ -158,72 +294,224 @@ export const COMPANY_PRESETS: Record<
     notes:
       "Thank you for the opportunity to submit this quotation. We look forward to working with you.",
     terms: `
-      <div style="font-family: 'Inter', Arial, sans-serif; color: #111827; max-width: 900px; margin: 0 auto; padding: 20px;">
-  <div style="text-align: center; margin-bottom: 40px;">
-    <div style="font-size: 36px; font-weight: 800; line-height: 1.1; margin-bottom: 12px; color: #111827;">
-      Terms & Conditions
-    </div>
-    <div style="font-size: 15px; color: #6b7280; max-width: 500px; margin: 0 auto;">
-      Please read our guidelines carefully to ensure a smooth and creative experience for everyone.
-    </div>
-  </div>
+      <div style="
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    max-width: 760px;
+    margin: 0 auto;
+    color: #1f2937;
+    line-height: 1.45;
+    padding: 8px 10px;
+    box-sizing: border-box;
+  ">
 
-  <div style="border: 1px solid #f59e0b; background: #fff7ed; border-radius: 12px; padding: 16px 20px; margin-bottom: 32px; display: flex; align-items: center; gap: 12px;">
-    <div style="font-size: 20px;">⚠️</div>
-    <div>
-      <div style="font-weight: 700; color: #92400e; font-size: 15px;">Strict Prohibition</div>
-      <div style="font-size: 14px; color: #78350f; line-height: 1.5;">
-        Use of paint, flour, or any form of powder/liquid is strictly prohibited in the studio to maintain equipment safety.
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 18px;">
+      <div style="
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #1e3a8a;
+        margin-bottom: 6px;
+      ">
+        Studio Policy
+      </div>
+
+      <h1 style="
+        font-size: 28px;
+        font-weight: 800;
+        color: #111827;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      ">
+        Terms &amp; Conditions
+      </h1>
+
+      <p style="
+        font-size: 13px;
+        color: #6b7280;
+        margin: 0 auto;
+        max-width: 620px;
+      ">
+        Please read these guidelines carefully to ensure a smooth and professional studio experience.
+      </p>
+    </div>
+
+    <!-- Policy Grid -->
+    <div style="
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    ">
+
+      <div style="
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+        page-break-inside: avoid;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="font-size: 16px; color: #1e3a8a;">◷</div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">Time &amp; Booking</h3>
+        </div>
+        <div style="height: 1px; background: #e5e7eb; margin-bottom: 5px;"></div>
+        <ul style="
+          margin: 0;
+          padding-left: 18px;
+          color: #1f2937;
+          font-size: 12px;
+          line-height: 1.45;
+        ">
+          <li style="margin-bottom: 5px;">Rental starts from the confirmed booking time.</li>
+          <li style="margin-bottom: 5px;">A 10-minute grace period is allowed for pack-up.</li>
+          <li style="margin-bottom: 5px;">Exceeding the grace period may attract an extra hour charge.</li>
+          <li>Clients must vacate on time if another booking follows.</li>
+        </ul>
+      </div>
+
+      <div style="
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+        page-break-inside: avoid;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="font-size: 16px; color: #1e3a8a;">⌂</div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">House Rules &amp; Hygiene</h3>
+        </div>
+        <div style="height: 1px; background: #e5e7eb; margin-bottom: 5px;"></div>
+        <ul style="
+          margin: 0;
+          padding-left: 18px;
+          color: #1f2937;
+          font-size: 12px;
+          line-height: 1.45;
+        ">
+          <li style="margin-bottom: 8px;">Do not litter the studio with food or waste.</li>
+          <li style="margin-bottom: 8px;">All mess must be cleaned before leaving.</li>
+          <li>Mess-causing powders or liquids are not allowed.</li>
+        </ul>
+      </div>
+
+      <div style="
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+        page-break-inside: avoid;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="font-size: 16px; color: #dc2626;">⚒</div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">Liability &amp; Damages</h3>
+        </div>
+        <div style="height: 1px; background: #e5e7eb; margin-bottom: 5px;"></div>
+        <ul style="
+          margin: 0;
+          padding-left: 18px;
+          color: #1f2937;
+          font-size: 12px;
+          line-height: 1.45;
+        ">
+          <li style="margin-bottom: 8px;">The client is responsible for any damage during the session.</li>
+          <li>All identified damages will be chargeable.</li>
+        </ul>
+      </div>
+
+      <div style="
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+        page-break-inside: avoid;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="font-size: 16px; color: #1e3a8a;">👥</div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">Capacity &amp; Logistics</h3>
+        </div>
+        <div style="height: 1px; background: #e5e7eb; margin-bottom: 5px;"></div>
+        <ul style="
+          margin: 0;
+          padding-left: 18px;
+          color: #1f2937;
+          font-size: 12px;
+          line-height: 1.45;
+        ">
+          <li style="margin-bottom: 8px;">Maximum occupancy is 10 to 13 people including crew.</li>
+          <li>Parking is available for cars and bikes.</li>
+        </ul>
       </div>
     </div>
-  </div>
 
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-    
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; background: #f9fafb;">
-      <div style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e3a8a; display: flex; align-items: center; gap: 8px;">
-        General Policies
+    <!-- Commercial Terms -->
+    <div style="
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #f9fafb;
+      padding: 16px;
+      box-shadow: 0 4px 10px rgba(17,24,39,0.04);
+      page-break-inside: avoid;
+    ">
+      <div style="
+        text-align: center;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #e5e7eb;
+      ">
+        <h2 style="
+          font-size: 20px;
+          font-weight: 800;
+          color: #111827;
+          margin: 0 0 4px 0;
+          letter-spacing: -0.02em;
+        ">
+          Commercial Terms
+        </h2>
+        <p style="
+          font-size: 12px;
+          color: #6b7280;
+          margin: 0;
+        ">
+          Please review the following commercial terms before confirmation.
+        </p>
       </div>
-      <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 13.5px; color: #374151;">
-        <li style="margin-bottom: 8px;">Quotation valid for <strong>7 days</strong> from issue.</li>
-        <li style="margin-bottom: 8px;">Additional work outside scope is charged separately.</li>
-        <li style="margin-bottom: 8px;"><strong>50% advance</strong> payment required to confirm.</li>
-        <li style="margin-bottom: 8px;">Re-scheduling must be addressed in advance.</li>
-        <li>Last-minute cancellations are non-refundable.</li>
-      </ul>
+
+      <div style="display: flex; flex-direction: column; ">
+
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 18px; font-size: 12px;">01</span>
+          <p style="margin: 0; font-size: 12px;">This quotation is valid for <span style="font-weight: 600;">7 days</span> from the date of issue.</p>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 18px; font-size: 12px;">02</span>
+          <p style="margin: 0; font-size: 12px;">Any additional work outside the agreed scope will be charged separately.</p>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="font-weight: 700; color: #3b82f6; min-width: 18px; font-size: 12px;">03</span>
+          <p style="margin: 0; font-size: 12px;">Payment terms will be mutually discussed and finalized before project initiation.</p>
+        </div>
+
+        {{CUSTOM_TERMS}}
+
+      </div>
     </div>
 
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e3a8a;">Time & Booking</div>
-      <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 13.5px; color: #4b5563;">
-        <li style="margin-bottom: 8px;">Rental starts from confirmed time, not arrival.</li>
-        <li style="margin-bottom: 8px;">20-30 mins wrap-up time included.</li>
-        <li style="margin-bottom: 8px;">Exceeding grace period incurs a full hour charge.</li>
-        <li>Must vacate promptly if a subsequent client is booked.</li>
-      </ul>
-    </div>
-
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e3a8a;">House Rules & Hygiene</div>
-      <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 13.5px; color: #4b5563;">
-        <li style="margin-bottom: 8px;">Do not litter; keeping the space clean is your responsibility.</li>
-        <li style="margin-bottom: 8px;">Ensure all mess is cleaned before leaving.</li>
-        <li>Strict prohibition of mess-causing liquids or powders.</li>
-      </ul>
-    </div>
-
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
-      <div style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1e3a8a;">Liability & Capacity</div>
-      <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 13.5px; color: #4b5563;">
-        <li style="margin-bottom: 8px;">Client is liable for <strong>all damages</strong> during session.</li>
-        <li style="margin-bottom: 8px;">Damages must be paid for immediately.</li>
-        <li style="margin-bottom: 8px;">Max occupancy: <strong>12-15 people</strong>.</li>
-        <li>Ample parking available for cars and bikes.</li>
-      </ul>
+    <div style="margin-top: 10px; text-align: right;">
+      <span style="font-size: 11px; color: #9ca3af; font-style: italic;">
+        Thank you for your business.
+      </span>
     </div>
 
   </div>
-</div>
     `
   },
 };
