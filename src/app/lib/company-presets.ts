@@ -227,7 +227,6 @@ export const COMPANY_PRESETS: Record<
     <div style="
       border: 1px solid #e5e7eb;
       border-radius: 10px;
-      background: #f9fafb;
       padding: 16px;
       box-shadow: 0 4px 10px rgba(17,24,39,0.04);
       page-break-inside: avoid;

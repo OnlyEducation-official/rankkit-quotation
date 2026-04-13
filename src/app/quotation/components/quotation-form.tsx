@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { QuotationData, QuotationItem } from "../../types/quotation";
-import RichTextEditor from "./rich-text-editor";
 import {
   Select,
   SelectContent,
@@ -26,6 +25,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import TiptapEditor from "./tiptap-editor";
 
 type QuotationFormProps = {
   quotation: QuotationData;
@@ -395,9 +395,15 @@ export default function QuotationForm({
 
               <p>Service Description</p>
 
-              <RichTextEditor
+              {/* <RichTextEditor
                 value={item.description}
                 onChange={(value) => updateItem(item.id, "description", value)}
+              /> */}
+
+              <TiptapEditor
+                value={item.description}
+                onChange={(value) => updateItem(item.id, "description", value)}
+                placeholder="Write your service details...."
               />
 
               <div className="grid gap-4 md:grid-cols-4">
