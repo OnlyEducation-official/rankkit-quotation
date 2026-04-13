@@ -14,10 +14,12 @@ export function printQuotation(quotation: QuotationData) {
     return;
   }
 
+  console.log(quotation)
+
   printWindow.document.write(`
     <html>
       <head>
-        <title>Quotation</title>
+        <title>Quotation to ${quotation.clientName || "Quotation"} - ${quotation.companyName}</title>
         <style>
           @page { size: A4; margin: 0; }
           html, body {

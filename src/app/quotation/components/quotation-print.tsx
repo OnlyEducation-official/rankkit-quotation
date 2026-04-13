@@ -441,13 +441,13 @@ th {
                         <td style={tdStyle}>{index + 1}</td>
                         <td style={{ ...tdStyle, fontWeight: 600 }}>{item.title}</td>
                         <td style={tdStyleRight}>
-                          {item.rate.toLocaleString(undefined, {
+                          {item.rate.toLocaleString('en-IN', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
                         </td>
                         <td style={tdStyleRight}>
-                          {amount.toLocaleString(undefined, {
+                          {amount.toLocaleString('en-IN', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
@@ -529,7 +529,7 @@ th {
                 <div style={summaryRow}>
                   <span>Subtotal</span>
                   <span>
-                    {subtotal.toLocaleString(undefined, {
+                    {subtotal.toLocaleString('en-IN', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
@@ -548,7 +548,7 @@ th {
                 >
                   <span>Estimated Total</span>
                   <span>
-                    {grandTotal.toLocaleString(undefined, {
+                    {grandTotal.toLocaleString('en-IN', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}

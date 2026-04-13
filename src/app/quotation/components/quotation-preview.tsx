@@ -112,14 +112,14 @@ export default function QuotationPreview({ quotation }: Props) {
                                     </td>
                                     {/* <td style={tdStyleRight}>{item.quantity}</td> */}
                                     <td style={tdStyleRight}>
-                                        {item.rate.toLocaleString(undefined, {
+                                        {item.rate.toLocaleString('en-IN', {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2,
                                         })}
                                     </td>
                                     {/* <td style={tdStyleRight}>{item.taxPercent}</td> */}
                                     <td style={tdStyleRight}>
-                                        {amount.toLocaleString(undefined, {
+                                        {amount.toLocaleString('en-IN', {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2,
                                         })}
@@ -134,7 +134,7 @@ export default function QuotationPreview({ quotation }: Props) {
                     <div style={rowStyle}>
                         <span>Subtotal</span>
                         <span>
-                            {subtotal.toLocaleString(undefined, {
+                            {subtotal.toLocaleString('en-IN', {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
                             })}
@@ -150,7 +150,7 @@ export default function QuotationPreview({ quotation }: Props) {
                     >
                         <span>Grand Total</span>
                         <span>
-                            {grandTotal.toLocaleString(undefined, {
+                            {grandTotal.toLocaleString('en-IN', {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
                             })}

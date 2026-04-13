@@ -528,7 +528,7 @@ export default function QuotationForm({
           <div className="flex items-center justify-between">
             <span>Subtotal</span>
             <span>
-              {subtotal.toLocaleString(undefined, {
+              {subtotal.toLocaleString('en-IN', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
@@ -543,7 +543,7 @@ export default function QuotationForm({
           <div className="flex items-center justify-between border-t pt-3 text-base font-semibold">
             <span>Grand Total</span>
             <span>
-              {grandTotal.toLocaleString(undefined, {
+              {grandTotal.toLocaleString('en-IN', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
