@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { QuotationData } from "../../types/quotation";
+import { QuotationData } from "../../../types/quotation";
 
 type Props = {
   quotation: QuotationData;
@@ -202,7 +202,7 @@ export default function QuotationPrint({ quotation }: Props) {
   .page-watermark img {
     width: 95mm;
     max-width: 55%;
-    opacity: 0.05;
+    opacity: 0.2;
     transform: rotate(-28deg);
     object-fit: contain;
   }

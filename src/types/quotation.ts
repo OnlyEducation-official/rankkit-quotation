@@ -1,4 +1,5 @@
 export type CompanyType = "rankkit-media" | "rankkit-studio" | "both";
+export type salesPersonName = "rhea" | "babita"
 
 export type QuotationItem = {
   id: string;
@@ -12,6 +13,7 @@ export type QuotationItem = {
 export type QuotationData = {
 
   companyType:CompanyType
+  salesPersonName:salesPersonName
 
   companyName: string;
   companyAddress: string;
@@ -32,5 +34,6 @@ export type QuotationData = {
   discount: number;
   notes: string;
   terms: string;
-  customTerms:string[]
+  customTerms:string[];
+  grandTotal?:number;
 };

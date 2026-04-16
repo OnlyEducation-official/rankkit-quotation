@@ -1,4 +1,21 @@
-import { CompanyType } from "../types/quotation";
+import { CompanyType, salesPersonName } from "../../types/quotation";
+
+export const NUMBER_PRESET: Record<
+  salesPersonName,
+  {
+    salesPersonName:string;
+    companyPhone:string;
+  }
+> = {
+  "rhea":{
+    salesPersonName:"Rhea",
+    companyPhone: "+91 9090 434376",
+  },
+  "babita":{
+    salesPersonName:"Babita",
+    companyPhone: "+91 9326 362867",
+  }
+}
 
 export const COMPANY_PRESETS: Record<
   CompanyType,
@@ -287,7 +304,7 @@ export const COMPANY_PRESETS: Record<
     `
   }, "both": {
     companyName: "Rankkit Media",
-    companyAddress: "Ambience Court, 1702, Phase 2, Sector 19E, Vashi, Navi Mumbai, Maharashtra 400703",
+    companyAddress: "Ambience Court, 1702-1703, Phase 2, Sector 19E, Vashi, Navi Mumbai, Maharashtra 400703",
     companyPhone: "+91 9090 434376",
     companyEmail: "rankkitmedia@gmail.com",
     notes:

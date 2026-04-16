@@ -1,7 +1,7 @@
 "use client";
 
 import { createRoot } from "react-dom/client";
-import { QuotationData } from "../../types/quotation";
+import { QuotationData } from "../../../types/quotation";
 import React from "react";
 import QuotationPrint from "./quotation-print";
 
@@ -14,12 +14,10 @@ export function printQuotation(quotation: QuotationData) {
     return;
   }
 
-  console.log(quotation)
-
   printWindow.document.write(`
     <html>
       <head>
-        <title>Quotation to ${quotation.clientName || "Quotation"} - ${quotation.companyName}</title>
+        <title>Proposal to ${quotation.clientName} - ${quotation.companyName}</title>
         <style>
           @page { size: A4; margin: 0; }
           html, body {

@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { QuotationData } from "../../types/quotation";
+import { QuotationData } from "../../../types/quotation";
 import { COMPANY_PRESETS } from "../../lib/company-presets";
 import { printQuotation } from "./print-quotation";
 import QuotationForm from "./quotation-form";
 import QuotationPreview from "./quotation-preview";
+import { createQuotation } from "@/src/services/quotation/quotation.service";
 
 const STORAGE_KEY = "quotation_draft";
 
@@ -18,6 +19,7 @@ function createInitialQuotation(): QuotationData {
 
   return {
     companyType: "rankkit-media",
+    salesPersonName: "rhea",
     companyName: defaultCompany.companyName,
     companyAddress: defaultCompany.companyAddress,
     companyPhone: defaultCompany.companyPhone,
@@ -46,7 +48,7 @@ function createInitialQuotation(): QuotationData {
     discount: 0,
     notes: defaultCompany.notes,
     terms: defaultCompany.terms,
-    customTerms: []
+    customTerms: [],
   };
 }
 
@@ -94,8 +96,23 @@ export default function QuotationPageClient() {
     }
   }, [quotation, mounted]);
 
-  const handleDownloadPdf = () => {
+  const handleDownloadPdf = async (grandTotal: number) => {
+    
+    const updatedQuotation = {
+      ...quotation,
+      grandTotal,
+    };
+
     printQuotation(quotation);
+
+    try {
+      const payload = updatedQuotation
+
+      const response = await createQuotation(payload);
+    } catch (error) {
+      console.error("Failed to save quotation:", error);
+    }
+
   };
 
   if (!mounted) {

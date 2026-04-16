@@ -1,4 +1,4 @@
-import { QuotationItem } from "../types/quotation";
+import { QuotationItem } from "../../types/quotation";
 
 export function getItemSubtotal(item: QuotationItem) {
   return item.quantity * item.rate;

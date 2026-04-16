@@ -5,7 +5,7 @@ import { Plus, Trash2, Download, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { QuotationData, QuotationItem } from "../../types/quotation";
+import { QuotationData, QuotationItem } from "../../../types/quotation";
 import {
   Select,
   SelectContent,
@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { COMPANY_PRESETS } from "../../lib/company-presets";
+import { COMPANY_PRESETS, NUMBER_PRESET } from "../../lib/company-presets";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -30,7 +30,7 @@ import TiptapEditor from "./tiptap-editor";
 type QuotationFormProps = {
   quotation: QuotationData;
   setQuotation: React.Dispatch<React.SetStateAction<QuotationData>>;
-  onDownloadPdf?: () => void;
+  onDownloadPdf: (grandTotal: number) => void | Promise<void>;
 };
 
 const createEmptyItem = (): QuotationItem => ({
@@ -51,6 +51,7 @@ const createInitialQuotation = (): QuotationData => {
 
   return {
     companyType: "rankkit-media",
+    salesPersonName: "rhea",
     companyName: preset.companyName,
     companyAddress: preset.companyAddress,
     companyPhone: preset.companyPhone,
@@ -70,7 +71,7 @@ const createInitialQuotation = (): QuotationData => {
     discount: 0,
     notes: preset.notes,
     terms: preset.terms,
-    customTerms: []
+    customTerms: [],
   };
 };
 
@@ -81,8 +82,6 @@ export default function QuotationForm({
 }: QuotationFormProps) {
 
   const [customTermInput, setCustomTermInput] = useState("");
-
-
 
   const updateField = (
     field: keyof QuotationData,
@@ -133,8 +132,6 @@ export default function QuotationForm({
   const getItemSubtotal = (item: QuotationItem) => item.quantity * item.rate;
   const getItemTax = (item: QuotationItem) =>
     getItemSubtotal(item) * (item.taxPercent / 100);
-  const getItemTotal = (item: QuotationItem) =>
-    getItemSubtotal(item) + getItemTax(item);
 
   const subtotal = quotation.items.reduce(
     (sum, item) => sum + getItemSubtotal(item),
@@ -160,6 +157,16 @@ export default function QuotationForm({
       companyEmail: preset.companyEmail,
       notes: preset.notes,
       terms: preset.terms,
+    }));
+  };
+
+  const handleSalespersonChange = (value: "rhea" | "babita") => {
+    const preset = NUMBER_PRESET[value];
+
+    setQuotation((prev) => ({
+      ...prev,
+      salesPersonName: value,
+      companyPhone: preset.companyPhone,
     }));
   };
 
@@ -234,7 +241,7 @@ export default function QuotationForm({
 
         <Button
           type="button"
-          onClick={onDownloadPdf}
+          onClick={() => onDownloadPdf(grandTotal)}
           className="gap-2 sm:ml-auto"
         >
           <Download className="h-4 w-4" />
@@ -266,6 +273,27 @@ export default function QuotationForm({
               <SelectItem value="rankkit-media">Rankkit Media</SelectItem>
               <SelectItem value="rankkit-studio">Rankkit Studio</SelectItem>
               <SelectItem value="both">Both</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="md:col-span-2 pl-4">
+          <label className="mb-2 block text-sm font-medium">
+            Select Salesperson
+          </label>
+
+          <Select
+            value={quotation.salesPersonName}
+            onValueChange={(value) =>
+              handleSalespersonChange(value as "rhea" | "babita")
+            }
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Salesperson" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="rhea">Rhea</SelectItem>
+              <SelectItem value="babita">Babita</SelectItem>
             </SelectContent>
           </Select>
         </div>
