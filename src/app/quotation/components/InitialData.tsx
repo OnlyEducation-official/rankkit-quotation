@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { QuotationData } from "../../../types/quotation";
-import { COMPANY_PRESETS } from "../../lib/company-presets";
+import { COMPANY_PRESETS, NUMBER_PRESET } from "../../lib/company-presets";
 import { printQuotation } from "./print-quotation";
 import QuotationForm from "./quotation-form";
 import QuotationPreview from "./quotation-preview";
@@ -12,6 +12,8 @@ const STORAGE_KEY = "quotation_draft";
 
 function createInitialQuotation(): QuotationData {
   const defaultCompany = COMPANY_PRESETS["rankkit-media"];
+  const salesPersonPreset = NUMBER_PRESET["rhea"]
+
 
   const today = new Date();
   const expiryDate = new Date(today);
@@ -22,7 +24,7 @@ function createInitialQuotation(): QuotationData {
     salesPersonName: "rhea",
     companyName: defaultCompany.companyName,
     companyAddress: defaultCompany.companyAddress,
-    companyPhone: defaultCompany.companyPhone,
+    companyPhone: salesPersonPreset.companyPhone,
     companyEmail: defaultCompany.companyEmail,
 
     clientName: "",
@@ -97,7 +99,7 @@ export default function QuotationPageClient() {
   }, [quotation, mounted]);
 
   const handleDownloadPdf = async (grandTotal: number) => {
-    
+
     const updatedQuotation = {
       ...quotation,
       grandTotal,

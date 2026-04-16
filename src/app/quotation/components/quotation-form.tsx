@@ -44,6 +44,7 @@ const createEmptyItem = (): QuotationItem => ({
 
 const createInitialQuotation = (): QuotationData => {
   const preset = COMPANY_PRESETS["rankkit-media"];
+  const salesPersonPreset = NUMBER_PRESET["rhea"]
 
   const today = new Date();
   const expiryDate = new Date();
@@ -54,7 +55,7 @@ const createInitialQuotation = (): QuotationData => {
     salesPersonName: "rhea",
     companyName: preset.companyName,
     companyAddress: preset.companyAddress,
-    companyPhone: preset.companyPhone,
+    companyPhone: salesPersonPreset.companyPhone,
     companyEmail: preset.companyEmail,
 
     clientName: "",
@@ -153,7 +154,6 @@ export default function QuotationForm({
       companyType: value,
       companyName: preset.companyName,
       companyAddress: preset.companyAddress,
-      companyPhone: preset.companyPhone,
       companyEmail: preset.companyEmail,
       notes: preset.notes,
       terms: preset.terms,

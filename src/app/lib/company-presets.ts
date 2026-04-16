@@ -22,7 +22,6 @@ export const COMPANY_PRESETS: Record<
   {
     companyName: string;
     companyAddress: string;
-    companyPhone: string;
     companyEmail: string;
     notes: string;
     terms: string;
@@ -31,7 +30,6 @@ export const COMPANY_PRESETS: Record<
   "rankkit-media": {
     companyName: "Rankkit Media",
     companyAddress: "Ambience Court, 1702, Phase 2, Sector 19E, Vashi, Navi Mumbai, Maharashtra 400703",
-    companyPhone: "+91 9090 434376",
     companyEmail: "rankkitmedia@gmail.com",
     notes:
       "Thank you for the opportunity to submit this quotation. We look forward to working with you.",
@@ -79,7 +77,6 @@ export const COMPANY_PRESETS: Record<
   "rankkit-studio": {
     companyName: "Rankkit Studio",
     companyAddress: "Ambience Court, 1703, Phase 2, Sector 19E, Vashi, Navi Mumbai, Maharashtra 400703",
-    companyPhone: "+91 9090 434376",
     companyEmail: "rankkitstudio@gmail.com",
     notes:
       "Thank you for considering Rankkit Studio for your production requirement. We would be happy to support your project.",
@@ -305,7 +302,6 @@ export const COMPANY_PRESETS: Record<
   }, "both": {
     companyName: "Rankkit Media",
     companyAddress: "Ambience Court, 1702-1703, Phase 2, Sector 19E, Vashi, Navi Mumbai, Maharashtra 400703",
-    companyPhone: "+91 9090 434376",
     companyEmail: "rankkitmedia@gmail.com",
     notes:
       "Thank you for the opportunity to submit this quotation. We look forward to working with you.",
