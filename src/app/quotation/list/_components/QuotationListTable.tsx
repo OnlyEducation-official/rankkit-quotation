@@ -1,9 +1,10 @@
 "use client";
-import { Trash2 } from 'lucide-react';
+import { Copy, Trash2 } from 'lucide-react';
 import QuotationListHeader from './QuotationListHeader';
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
-import { deleteQuotation } from '@/src/services/quotation/quotation.service';
+import { createQuotation, deleteQuotation, getQuotationById } from '@/src/services/quotation/quotation.service';
+import { QuotationData } from '@/src/types/quotation';
 
 export type QuotationListItem = {
     clientName: string;
@@ -32,6 +33,57 @@ export default function QuotationListTable({ quotations }: { quotations: Quotati
         }
     };
 
+    const handleDuplicate = async (id: string) => {
+        try {
+            // 1. get full quotation
+            const res = await getQuotationById(id);
+
+            if (!res?.success) {
+                console.error("Failed to fetch quotation");
+                return;
+            }
+
+            const original = res.data;
+
+            // 2. remove DB-only fields
+            const {
+                id: _id,
+                createdAt,
+                updatedAt,
+                ...rest
+            } = original as QuotationData;
+
+            // 3. optional tweaks
+            const payload = {
+                ...rest,
+                clientName: `${rest.clientName} (Copy)`,
+                // optionally reset dates
+                quotationDate: new Date().toISOString().split("T")[0],
+                validTill: new Date(
+                    Date.now() + 7 * 24 * 60 * 60 * 1000
+                )
+                    .toISOString()
+                    .split("T")[0],
+            };
+
+            console.log("payload:", payload)
+
+            // 4. create new
+            const createRes = await createQuotation(payload);
+
+            if (!createRes?.success) {
+                console.error("Duplicate create failed");
+                return;
+            }
+
+            // 5. redirect to new quotation
+            // router.push(`/quotation/${createRes.data.id}`);
+        } catch (err) {
+            console.error("Duplicate error:", err);
+        }
+    };
+
+
     return (
         <div className="mx-auto max-w-7xl px-4 py-6">
 
@@ -45,6 +97,7 @@ export default function QuotationListTable({ quotations }: { quotations: Quotati
                             <th className="p-3">Client Name</th>
                             <th className="p-3">Created At</th>
                             <th className="p-3">Delete</th>
+                            <th className="p-3">Duplicate</th>
                         </tr>
                     </thead>
 
@@ -62,18 +115,37 @@ export default function QuotationListTable({ quotations }: { quotations: Quotati
                                     {new Date(q.createdAt).toLocaleDateString("en-CA")}
                                 </td>
 
-                                {/* 🔥 ACTION COLUMN */}
                                 <td
-                                    className="p-3"
-                                    onClick={(e) => e.stopPropagation()} // IMPORTANT
+                                    className="p-3 "
+                                    onClick={(e) => e.stopPropagation()} // prevent row navigation
                                 >
+                                    {/* Delete */}
                                     <button
                                         onClick={() => handleDelete(q.id)}
                                         className="text-red-500 hover:text-red-700"
+                                        title="Delete"
                                     >
                                         <Trash2 size={18} />
                                     </button>
                                 </td>
+
+                                <td
+                                    className="p-3"
+                                    onClick={(e) => e.stopPropagation()} // prevent row navigation
+                                >
+                                    {/* Delete */}
+                                    <button
+                                        onClick={() => handleDuplicate(q.id)}
+                                        className="text-gray-500 hover:text-red-700"
+                                        title="Delete"
+                                    >
+                                        <Copy size={18} />
+                                    </button>
+                                </td>
+
+
+
+
                             </tr>
                         ))}
                     </tbody>
