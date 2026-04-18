@@ -16,10 +16,14 @@ export default function Navbar() {
   const isQuotationActive =
     pathname.startsWith("/quotation");
 
+  const emptyLocalHost = () => {
+    localStorage.removeItem("quotation_draft");
+  }
+
   return (
     <header className="w-full border-b bg-white">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-        
+
         {/* Logo */}
         <Link href="/" className="text-lg font-semibold">
           Quotation App
@@ -27,11 +31,13 @@ export default function Navbar() {
 
         {/* Menu */}
         <div className="flex items-center gap-6">
-          
+
           {/* Home */}
           <Link
             href="/"
             className={pathname === "/" ? "font-bold text-blue-600" : ""}
+            onClick={() => emptyLocalHost()}
+
           >
             Home
           </Link>
@@ -39,22 +45,27 @@ export default function Navbar() {
           {/* Quotation Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger
-              className={`flex items-center gap-1 ${
-                isQuotationActive ? "font-bold text-blue-600" : ""
-              }`}
+              className={`flex items-center gap-1 ${isQuotationActive ? "font-bold text-blue-600" : ""
+                }`}
             >
               Quotation ▼
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
-                <Link href="/quotation/list">
+                <Link
+                  href="/quotation/list"
+                  onClick={() => emptyLocalHost()}
+                >
                   All Quotations
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem asChild>
-                <Link href="/quotation">
+                <Link
+                  href="/quotation"
+                  onClick={() => emptyLocalHost()}
+                >
                   Quotation Creator
                 </Link>
               </DropdownMenuItem>

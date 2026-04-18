@@ -8,6 +8,11 @@ import { printQuotation } from "./print-quotation";
 import QuotationForm from "./quotation-form";
 import QuotationPreview from "./quotation-preview";
 
+export type QuotationFormProps = {
+  mode: "create" | "edit";
+  initialData?: QuotationData | null;
+};
+
 const STORAGE_KEY = "quotation_draft";
 
 function createInitialQuotation(): QuotationData {
@@ -54,13 +59,25 @@ function createInitialQuotation(): QuotationData {
   };
 }
 
-export default function QuotationPageClient() {
+export default function QuotationPageClient({
+  mode,
+  initialData,
+}: QuotationFormProps) {
   const [mounted, setMounted] = useState(false);
-  const [quotation, setQuotation] = useState<QuotationData>(createInitialQuotation);
 
+  const [quotation, setQuotation] = useState<QuotationData>(() =>
+    mode === "edit" && initialData ? initialData : createInitialQuotation()
+  );
+
+  console.log("quotation:", quotation)
 
   useEffect(() => {
     try {
+      if (mode === "edit") {
+        setMounted(true);
+        return;
+      }
+
       const saved = localStorage.getItem(STORAGE_KEY);
 
       if (saved) {
@@ -86,7 +103,7 @@ export default function QuotationPageClient() {
     } finally {
       setMounted(true);
     }
-  }, []);
+  }, [mode]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -117,11 +134,10 @@ export default function QuotationPageClient() {
       console.log(response)
 
       if (response.success && response.message === "Quotation created successfully") {
-        
-        printQuotation(quotation);
 
-        // localStorage.removeItem("quotation_draft");
-        // setQuotation(createInitialQuotation());
+        printQuotation(quotation);
+        localStorage.removeItem("quotation_draft");
+        setQuotation(createInitialQuotation());
 
       }
 
@@ -142,6 +158,7 @@ export default function QuotationPageClient() {
           quotation={quotation}
           setQuotation={setQuotation}
           onDownloadPdf={handleDownloadPdf}
+          mode={mode}
         />
         <QuotationPreview quotation={quotation} />
       </div>

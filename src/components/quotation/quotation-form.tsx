@@ -32,6 +32,7 @@ type QuotationFormProps = {
   quotation: QuotationData;
   setQuotation: React.Dispatch<React.SetStateAction<QuotationData>>;
   onDownloadPdf: (grandTotal: number) => void | Promise<void>;
+  mode: string;
 };
 
 const createEmptyItem = (): QuotationItem => ({
@@ -81,6 +82,7 @@ export default function QuotationForm({
   quotation,
   setQuotation,
   onDownloadPdf,
+  mode
 }: QuotationFormProps) {
 
   const [customTermInput, setCustomTermInput] = useState("");
@@ -199,7 +201,7 @@ export default function QuotationForm({
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <Button type="button" onClick={addItem} className="gap-2">
           <Plus className="h-4 w-4" />
-          Add Item
+          {mode === "create" ? "Add Item" : "Edit Item"}
         </Button>
 
         <AlertDialog>
@@ -208,6 +210,7 @@ export default function QuotationForm({
               type="button"
               variant="outline"
               className="gap-2"
+              disabled={mode === "edit"}
             >
               <RotateCcw className="h-4 w-4" />
               Reset
@@ -240,14 +243,6 @@ export default function QuotationForm({
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* <Button
-          type="button"
-          onClick={() => onDownloadPdf(grandTotal)}
-          className="gap-2 sm:ml-auto"
-        >
-          <Download className="h-4 w-4" />
-          Download PDF
-        </Button> */}
         <DownloadPdfAlert onDownloadPdf={onDownloadPdf} grandTotal={grandTotal} />
       </div>
 
@@ -369,7 +364,7 @@ export default function QuotationForm({
             </label>
             <Input
               type="date"
-              value={quotation.quotationDate}
+              value={new Date(quotation.quotationDate).toLocaleDateString("en-CA")}
               onChange={(e) => updateField("quotationDate", e.target.value)}
             />
           </div>
@@ -382,7 +377,7 @@ export default function QuotationForm({
             <Input
               type="date"
               // If validTill is undefined or null, default to empty string to avoid errors
-              value={quotation.validTill}
+              value={new Date(quotation.validTill).toLocaleDateString("en-CA")}
               onChange={(e) => updateField("validTill", e.target.value)}
             />
           </div>

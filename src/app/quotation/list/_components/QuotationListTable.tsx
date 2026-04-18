@@ -1,5 +1,7 @@
-import { QuotationData, QuotationDataOk } from '@/src/types/quotation';
+"use client";
 import QuotationListHeader from './QuotationListHeader';
+import Link from 'next/link';
+import { useRouter } from "next/navigation";
 
 export type QuotationListItem = {
     clientName: string;
@@ -9,6 +11,9 @@ export type QuotationListItem = {
 };
 
 export default function QuotationListTable({ quotations }: { quotations: QuotationListItem[] }) {
+
+    const router = useRouter();
+
     return (
         <div className="mx-auto max-w-7xl px-4 py-6">
 
@@ -26,12 +31,16 @@ export default function QuotationListTable({ quotations }: { quotations: Quotati
 
                     <tbody>
                         {quotations.map((q) => (
-                            <tr key={q.id} className="border-t">
+                            <tr 
+                                key={q.id}
+                                className="border-t"
+                                onClick={() => router.push(`/quotation/${q.quotationNumber}`)}
+                            >
                                 <td className="p-3">{q.quotationNumber}</td>
                                 <td className="p-3">{q.clientName}</td>
-                                <td className="p-3">
+                                {/* <td className="p-3">
                                     {new Date(q.createdAt).toLocaleString()}
-                                </td>
+                                </td> */}
                             </tr>
                         ))}
                     </tbody>

@@ -31,7 +31,7 @@ export async function getQuotations() {
 }
 
 export async function getQuotationById(id: string) {
-  return apiFetch<ApiResponse<QuotationData>>(`/quotations/${id}`, {
+  return apiFetch<ApiResponse<QuotationData>>(`/api/v1/quotations/${id}`, {
     method: "GET",
   });
 }
