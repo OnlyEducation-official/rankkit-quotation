@@ -5,7 +5,7 @@ import { Plus, Trash2, Download, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { QuotationData, QuotationItem } from "../../../types/quotation";
+import { QuotationData, QuotationItem } from "../../types/quotation";
 import {
   Select,
   SelectContent,
@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { COMPANY_PRESETS, NUMBER_PRESET } from "../../lib/company-presets";
+import { COMPANY_PRESETS, NUMBER_PRESET } from "../../app/lib/company-presets";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -26,6 +26,7 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import TiptapEditor from "./tiptap-editor";
+import DownloadPdfAlert from "./DownloadPdfAlert";
 
 type QuotationFormProps = {
   quotation: QuotationData;
@@ -63,7 +64,7 @@ const createInitialQuotation = (): QuotationData => {
     clientPhone: "",
     clientEmail: "",
 
-    quotationNumber: "QT-001",
+    quotationNumber: "",
     quotationDate: today.toISOString().split("T")[0],
     validTill: expiryDate.toISOString().split("T")[0],
 
@@ -239,14 +240,15 @@ export default function QuotationForm({
           </AlertDialogContent>
         </AlertDialog>
 
-        <Button
+        {/* <Button
           type="button"
           onClick={() => onDownloadPdf(grandTotal)}
           className="gap-2 sm:ml-auto"
         >
           <Download className="h-4 w-4" />
           Download PDF
-        </Button>
+        </Button> */}
+        <DownloadPdfAlert onDownloadPdf={onDownloadPdf} grandTotal={grandTotal} />
       </div>
 
       <Card>

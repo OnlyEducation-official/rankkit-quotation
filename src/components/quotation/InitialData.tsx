@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { QuotationData } from "../../../types/quotation";
-import { COMPANY_PRESETS, NUMBER_PRESET } from "../../lib/company-presets";
+import { QuotationData } from "../../types/quotation";
+import { COMPANY_PRESETS, NUMBER_PRESET } from "../../app/lib/company-presets";
+import { createQuotation } from "@/src/services/quotation/quotation.service";
 import { printQuotation } from "./print-quotation";
 import QuotationForm from "./quotation-form";
 import QuotationPreview from "./quotation-preview";
-import { createQuotation } from "@/src/services/quotation/quotation.service";
 
 const STORAGE_KEY = "quotation_draft";
 
@@ -32,7 +32,7 @@ function createInitialQuotation(): QuotationData {
     clientPhone: "",
     clientEmail: "",
 
-    quotationNumber: "QT-001",
+    quotationNumber: "",
     quotationDate: today.toISOString().split("T")[0],
     validTill: expiryDate.toISOString().split("T")[0],
 
@@ -100,17 +100,31 @@ export default function QuotationPageClient() {
 
   const handleDownloadPdf = async (grandTotal: number) => {
 
+    const {
+      terms,        // optional if you want to remap
+      ...rest
+    } = quotation;
+
     const updatedQuotation = {
-      ...quotation,
+      ...rest,
       grandTotal,
     };
-
-    printQuotation(quotation);
 
     try {
       const payload = updatedQuotation
 
       const response = await createQuotation(payload);
+      console.log(response)
+
+      if (response.success && response.message === "Quotation created successfully") {
+        
+        printQuotation(quotation);
+
+        // localStorage.removeItem("quotation_draft");
+        // setQuotation(createInitialQuotation());
+
+      }
+
     } catch (error) {
       console.error("Failed to save quotation:", error);
     }

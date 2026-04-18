@@ -33,7 +33,35 @@ export type QuotationData = {
 
   discount: number;
   notes: string;
-  terms: string;
+  terms?: string;
   customTerms:string[];
   grandTotal?:number;
 };
+
+export type QuotationDataOk = {
+
+  companyType:CompanyType
+  salesPersonName:salesPersonName
+
+  companyName: string;
+  companyAddress: string;
+  companyPhone: string;
+  companyEmail: string;
+
+  clientName: string;
+  clientAddress: string;
+  clientPhone: string;
+  clientEmail: string;
+
+  quotationNumber: string;
+  quotationDate: string;
+  validTill: string;
+
+  items: QuotationItem[];
+
+  discount: number;
+  notes: string;
+  terms?: string;
+  customTerms:string[];
+  grandTotal?:number;
+}[];

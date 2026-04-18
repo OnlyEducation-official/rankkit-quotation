@@ -1,4 +1,4 @@
-import QuotationPageClient from "./components/InitialData";
+import QuotationPageClient from "../../components/quotation/InitialData";
 
 
 
