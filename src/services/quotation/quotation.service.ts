@@ -36,8 +36,8 @@ export async function getQuotationById(id: string) {
   });
 }
 
-export async function updateQuotation(id: string, payload: QuotationData) {
-  return apiFetch<ApiResponse<QuotationData>>(`/quotations/${id}`, {
+export async function updateQuotationn(id: string, payload: QuotationData) {
+  return apiFetch<ApiResponse<QuotationData>>(`/api/v1/quotations/${id}`, {
     method: "PATCH",
     body: JSON.stringify(payload),
   });

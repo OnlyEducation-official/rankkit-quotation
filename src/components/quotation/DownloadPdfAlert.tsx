@@ -15,11 +15,13 @@ import { Download } from "lucide-react";
 type AlertProps = {
   onDownloadPdf: (grandTotal: number) => void | Promise<void>;
   grandTotal:number;
+  mode:string;
 };
 
 export default function DownloadPdfAlert({
     onDownloadPdf,
-    grandTotal
+    grandTotal,
+    mode
 }: AlertProps) {
     return (
         <div>
@@ -28,22 +30,28 @@ export default function DownloadPdfAlert({
                 <AlertDialogTrigger asChild>
                     <Button type="button" className="gap-2 sm:ml-auto">
                         <Download className="h-4 w-4" />
-                        Download PDF
+                        {mode === "edit" ? "Download and Edit" : "Download PDF"}
                     </Button>
                 </AlertDialogTrigger>
 
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Save quotation?</AlertDialogTitle>
+                        <AlertDialogTitle>
+                            {
+                                mode === "edit" ?
+                                    "Edit Quotation" :
+                                    "Save quotation?"
+                            }
+                        </AlertDialogTitle>
                         <AlertDialogDescription>
-                            Do you want to save this quotation before downloading the PDF?
+                            Do you want to <b>{mode === "edit" ? "Edit" : " Save"}</b> this quotation before downloading the PDF?
                         </AlertDialogDescription>
                     </AlertDialogHeader>
 
                     <AlertDialogFooter>
                         <AlertDialogCancel>No, Close</AlertDialogCancel>
                         <AlertDialogAction onClick={() => onDownloadPdf(grandTotal)}>
-                            Yes
+                            {mode === "edit" ? "Yes, Edit" : "Yes, Save"}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

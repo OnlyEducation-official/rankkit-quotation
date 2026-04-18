@@ -75,6 +75,7 @@ const createInitialQuotation = (): QuotationData => {
     notes: preset.notes,
     terms: preset.terms,
     customTerms: [],
+    
   };
 };
 
@@ -147,7 +148,7 @@ export default function QuotationForm({
     0,
   );
 
-  const grandTotal = subtotal + taxTotal - (quotation.discount || 0);
+  const grandTotal = quotation.grandTotal ? quotation.grandTotal :  subtotal + taxTotal - (quotation.discount || 0);
 
   const handleCompanyChange = (value: "rankkit-media" | "rankkit-studio" | "both") => {
     const preset = COMPANY_PRESETS[value];
@@ -243,7 +244,7 @@ export default function QuotationForm({
           </AlertDialogContent>
         </AlertDialog>
 
-        <DownloadPdfAlert onDownloadPdf={onDownloadPdf} grandTotal={grandTotal} />
+        <DownloadPdfAlert onDownloadPdf={onDownloadPdf} grandTotal={grandTotal} mode={mode} />
       </div>
 
       <Card>

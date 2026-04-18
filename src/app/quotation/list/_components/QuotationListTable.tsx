@@ -34,7 +34,7 @@ export default function QuotationListTable({ quotations }: { quotations: Quotati
                             <tr 
                                 key={q.id}
                                 className="border-t"
-                                onClick={() => router.push(`/quotation/${q.quotationNumber}`)}
+                                onClick={() => router.push(`/quotation/${q.id}`)}
                             >
                                 <td className="p-3">{q.quotationNumber}</td>
                                 <td className="p-3">{q.clientName}</td>

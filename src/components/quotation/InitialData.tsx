@@ -3,10 +3,15 @@
 import { useEffect, useState } from "react";
 import { QuotationData } from "../../types/quotation";
 import { COMPANY_PRESETS, NUMBER_PRESET } from "../../app/lib/company-presets";
-import { createQuotation } from "@/src/services/quotation/quotation.service";
+import { createQuotation, updateQuotationn } from "@/src/services/quotation/quotation.service";
 import { printQuotation } from "./print-quotation";
 import QuotationForm from "./quotation-form";
 import QuotationPreview from "./quotation-preview";
+
+const formatDate = (date: string) => {
+  if (!date) return date;
+  return new Date(date).toISOString().split("T")[0];
+};
 
 export type QuotationFormProps = {
   mode: "create" | "edit";
@@ -116,35 +121,62 @@ export default function QuotationPageClient({
   }, [quotation, mounted]);
 
   const handleDownloadPdf = async (grandTotal: number) => {
-
-    const {
-      terms,        // optional if you want to remap
-      ...rest
-    } = quotation;
-
-    const updatedQuotation = {
-      ...rest,
-      grandTotal,
-    };
-
     try {
-      const payload = updatedQuotation
+      // 🔹 Step 1: Prepare payload based on mode
+      let payload;
 
-      const response = await createQuotation(payload);
-      console.log(response)
+      if (mode === "edit") {
+        const { terms, createdAt, updatedAt, id, ...rest } = quotation;
 
-      if (response.success && response.message === "Quotation created successfully") {
+        payload = {
+          ...rest,
+          quotationDate: formatDate(rest.quotationDate),
+          validTill: formatDate(rest.validTill),
+          grandTotal,
+        };
+      } else {
+        const { terms, ...rest } = quotation;
 
+        payload = {
+          ...rest,
+          quotationDate: formatDate(rest.quotationDate),
+          validTill: formatDate(rest.validTill),
+          grandTotal,
+        };
+      }
+
+      console.log("Payload:", payload);
+
+      // 🔹 Step 2: Call API based on mode
+      let response;
+
+      if (mode === "edit" && quotation.id) {
+        response = await updateQuotationn(quotation.id, payload);
+      } else {
+        response = await createQuotation(payload);
+      }
+
+      console.log("Response:", response);
+
+      // 🔹 Step 3: Handle success
+      if (response?.success) {
+        // IMPORTANT → use response.data, not local state
         printQuotation(quotation);
+
         localStorage.removeItem("quotation_draft");
+
+        // reset only in create mode
         setQuotation(createInitialQuotation());
 
+        // router.push("/quotation/list");
+
+      } else {
+        console.error("API failed:", response?.message);
       }
 
     } catch (error) {
       console.error("Failed to save quotation:", error);
     }
-
   };
 
   if (!mounted) {
