@@ -44,7 +44,7 @@ export async function updateQuotationn(id: string, payload: QuotationData) {
 }
 
 export async function deleteQuotation(id: string) {
-  return apiFetch<ApiResponse<null>>(`/quotations/${id}`, {
+  return apiFetch<ApiResponse<null>>(`/api/v1/quotations/${id}`, {
     method: "DELETE",
   });
 }

@@ -66,7 +66,7 @@ export default function Navbar() {
                   href="/quotation"
                   onClick={() => emptyLocalHost()}
                 >
-                  Quotation Creator
+                  Create Quotation
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
