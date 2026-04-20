@@ -5,6 +5,8 @@ import { QuotationData } from "../../types/quotation";
 
 type Props = {
   quotation: QuotationData;
+  mode: string;
+  grandTotal: number;
 };
 
 const BRAND_WATERMARKS: Record<string, string> = {
@@ -15,60 +17,49 @@ const BRAND_WATERMARKS: Record<string, string> = {
 };
 
 function escapeHtml(value: string) {
-    return value
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
-  }
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
 
 function buildCustomTermsHtml(customTerms: string[]) {
-    if (!Array.isArray(customTerms) || customTerms.length === 0) return "";
+  if (!Array.isArray(customTerms) || customTerms.length === 0) return "";
 
-    return `
+  return `
     <div style="margin-top: 16px;">
       <div style="font-weight: 700; color: #111827; margin-bottom: 4px;">
         Additional Terms
       </div>
       <div style="display: flex; flex-direction: column;">
         ${customTerms
-        .map(
-          (term) => `
+      .map(
+        (term) => `
               <div style="display: flex; gap: 8px; align-items: flex-start;">
                 <span style="font-weight: 700; color: #3b82f6; min-width: 20px;">•</span>
                 <p style="margin: 0; ">${escapeHtml(term)}</p>
               </div>
             `
-        )
-        .join("")}
+      )
+      .join("")}
       </div>
     </div>
   `;
-  }
+}
 
 export function getMergedTermsHtml(quotation: QuotationData) {
-    const fallback =
-      "<p>Prices are subject to confirmation and validity period mentioned above.</p>";
+  const fallback =
+    "<p>Prices are subject to confirmation and validity period mentioned above.</p>";
 
-    const termsHtml = quotation.terms || fallback;
-    const customTermsHtml = buildCustomTermsHtml(quotation.customTerms || []);
+  const termsHtml = quotation.terms || fallback;
+  const customTermsHtml = buildCustomTermsHtml(quotation.customTerms || []);
 
-    return termsHtml.replace("{{CUSTOM_TERMS}}", customTermsHtml);
-  }
+  return termsHtml.replace("{{CUSTOM_TERMS}}", customTermsHtml);
+}
 
-export default function QuotationPrint({ quotation }: Props) {
-  const subtotal = quotation.items.reduce(
-    (sum, item) => sum + item.quantity * item.rate,
-    0,
-  );
-
-  const taxTotal = quotation.items.reduce(
-    (sum, item) => sum + item.quantity * item.rate * (item.taxPercent / 100),
-    0,
-  );
-
-  const grandTotal = subtotal + taxTotal - (quotation.discount || 0);
+export default function QuotationPrint({ quotation, mode, grandTotal }: Props) {
 
   const companyKey = (quotation.companyName || "").trim().toLowerCase();
   const watermarkLogo = BRAND_WATERMARKS[companyKey] || "";
@@ -424,17 +415,12 @@ th {
                 <tr>
                   <th style={{ ...thStyle, width: "70px" }}>Sr. No.</th>
                   <th style={thStyle}>Title</th>
-                  <th style={{ ...thStyleRight, width: "120px" }}>Rate</th>
                   <th style={{ ...thStyleRight, width: "140px" }}>Amount</th>
                 </tr>
               </thead>
 
               <tbody>
                 {quotation.items.map((item, index) => {
-                  const amount =
-                    item.quantity * item.rate +
-                    item.quantity * item.rate * (item.taxPercent / 100);
-
                   return (
                     <React.Fragment key={item.id}>
                       <tr>
@@ -442,12 +428,6 @@ th {
                         <td style={{ ...tdStyle, fontWeight: 600 }}>{item.title}</td>
                         <td style={tdStyleRight}>
                           {item.rate.toLocaleString('en-IN', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
-                        </td>
-                        <td style={tdStyleRight}>
-                          {amount.toLocaleString('en-IN', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
@@ -529,7 +509,7 @@ th {
                 <div style={summaryRow}>
                   <span>Subtotal</span>
                   <span>
-                    {subtotal.toLocaleString('en-IN', {
+                    {grandTotal.toLocaleString('en-IN', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}

@@ -6,7 +6,7 @@ import QuotationPrint from "./quotation-print";
 import { QuotationData } from "@/src/types/quotation";
 
 
-export function printQuotation(quotation: QuotationData) {
+export function printQuotation(quotation: QuotationData, mode: string, grandTotal:number) {
   const printWindow = window.open("", "_blank", "width=900,height=1200");
 
   if (!printWindow) {
@@ -43,7 +43,7 @@ export function printQuotation(quotation: QuotationData) {
   if (!mountNode) return;
 
   const root = createRoot(mountNode);
-  root.render(React.createElement(QuotationPrint, { quotation }));
+  root.render(React.createElement(QuotationPrint, { quotation, mode, grandTotal }));
 
   setTimeout(() => {
     printWindow.focus();

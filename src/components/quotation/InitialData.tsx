@@ -121,6 +121,7 @@ export default function QuotationPageClient({
   }, [quotation, mounted]);
 
   const handleDownloadPdf = async (grandTotal: number) => {
+    console.log("initial data:",grandTotal)
     try {
       // 🔹 Step 1: Prepare payload based on mode
       let payload;
@@ -161,7 +162,7 @@ export default function QuotationPageClient({
       // 🔹 Step 3: Handle success
       if (response?.success) {
         // IMPORTANT → use response.data, not local state
-        printQuotation(quotation);
+        printQuotation(quotation, mode, grandTotal);
 
         localStorage.removeItem("quotation_draft");
 
@@ -185,14 +186,14 @@ export default function QuotationPageClient({
 
   return (
     <main className="container mx-auto p-6">
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6">
         <QuotationForm
           quotation={quotation}
           setQuotation={setQuotation}
           onDownloadPdf={handleDownloadPdf}
           mode={mode}
         />
-        <QuotationPreview quotation={quotation} />
+        {/* <QuotationPreview quotation={quotation} /> */}
       </div>
     </main>
   );

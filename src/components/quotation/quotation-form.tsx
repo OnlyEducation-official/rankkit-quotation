@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Plus, Trash2, Download, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,7 +75,7 @@ const createInitialQuotation = (): QuotationData => {
     notes: preset.notes,
     terms: preset.terms,
     customTerms: [],
-    
+
   };
 };
 
@@ -87,6 +87,8 @@ export default function QuotationForm({
 }: QuotationFormProps) {
 
   const [customTermInput, setCustomTermInput] = useState("");
+  const [flag, setFlag] = useState(false)
+  const [grandTotal,setgrandTotal] = useState(mode === "edit" ? quotation.grandTotal : 0 )
 
   const updateField = (
     field: keyof QuotationData,
@@ -103,22 +105,28 @@ export default function QuotationForm({
     field: keyof QuotationItem,
     value: string | number,
   ) => {
+    console.log("update item")
     setQuotation((prev) => ({
       ...prev,
       items: prev.items.map((item) =>
         item.id === id ? { ...item, [field]: value } : item,
       ),
     }));
+    setFlag(!flag)
   };
 
   const addItem = () => {
+    console.log("add item")
     setQuotation((prev) => ({
       ...prev,
       items: [...prev.items, createEmptyItem()],
     }));
+    setFlag(!flag)
+
   };
 
   const removeItem = (id: string) => {
+    console.log("remove item")
     setQuotation((prev) => {
       if (prev.items.length === 1) return prev;
 
@@ -127,6 +135,7 @@ export default function QuotationForm({
         items: prev.items.filter((item) => item.id !== id),
       };
     });
+    setFlag(!flag)
   };
 
   const resetForm = () => {
@@ -134,21 +143,28 @@ export default function QuotationForm({
     setQuotation(createInitialQuotation());
   };
 
-  const getItemSubtotal = (item: QuotationItem) => item.quantity * item.rate;
-  const getItemTax = (item: QuotationItem) =>
-    getItemSubtotal(item) * (item.taxPercent / 100);
+  useEffect(() => {
+    
+    const getItemSubtotal = (item: QuotationItem) => item.rate;
+    const getItemTax = (item: QuotationItem) =>
+      getItemSubtotal(item) * (item.taxPercent / 100);
+    
+    console.log(quotation.items)
 
-  const subtotal = quotation.items.reduce(
-    (sum, item) => sum + getItemSubtotal(item),
-    0,
-  );
+    const subtotal = quotation.items.reduce(
+      (sum, item) => sum + getItemSubtotal(item),
+      0,
+    );
 
-  const taxTotal = quotation.items.reduce(
-    (sum, item) => sum + getItemTax(item),
-    0,
-  );
+    const grandTotal = subtotal - (quotation.discount || 0);
 
-  const grandTotal = quotation.grandTotal ? quotation.grandTotal :  subtotal + taxTotal - (quotation.discount || 0);
+    console.log("Grand Total:",grandTotal, "Sub Total:",subtotal)
+
+    setgrandTotal(grandTotal)
+
+  }, [flag,mode])
+
+
 
   const handleCompanyChange = (value: "rankkit-media" | "rankkit-studio" | "both") => {
     const preset = COMPANY_PRESETS[value];
@@ -244,7 +260,7 @@ export default function QuotationForm({
           </AlertDialogContent>
         </AlertDialog>
 
-        <DownloadPdfAlert onDownloadPdf={onDownloadPdf} grandTotal={grandTotal} mode={mode} />
+        <DownloadPdfAlert onDownloadPdf={onDownloadPdf} grandTotal={grandTotal || 0} mode={mode} />
       </div>
 
       <Card>
@@ -554,10 +570,10 @@ export default function QuotationForm({
           <div className="flex items-center justify-between">
             <span>Subtotal</span>
             <span>
-              {subtotal.toLocaleString('en-IN', {
+              {/* {subtotal.toLocaleString('en-IN', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })}
+              })} */}
             </span>
           </div>
 
@@ -569,7 +585,7 @@ export default function QuotationForm({
           <div className="flex items-center justify-between border-t pt-3 text-base font-semibold">
             <span>Grand Total</span>
             <span>
-              {grandTotal.toLocaleString('en-IN', {
+              {grandTotal?.toLocaleString('en-IN', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}

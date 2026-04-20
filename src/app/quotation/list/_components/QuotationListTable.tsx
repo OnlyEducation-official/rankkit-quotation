@@ -77,7 +77,9 @@ export default function QuotationListTable({ quotations }: { quotations: Quotati
             }
 
             // 5. redirect to new quotation
-            // router.push(`/quotation/${createRes.data.id}`);
+            window.location.reload();
+
+            // router.push(`/quotation/${createRes?.data?.id}`);
         } catch (err) {
             console.error("Duplicate error:", err);
         }
