@@ -18,8 +18,6 @@ export default async function QuotationIdPage({ params }: PageProps) {
 
     const initialData: QuotationData | null = response.data || null;
 
-    console.log("Setting preset : ", initialData)
-
     if (!initialData) return;
 
     if (initialData.companyName === "Rankkit Media") {

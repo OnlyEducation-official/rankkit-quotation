@@ -74,8 +74,6 @@ export default function QuotationPageClient({
     mode === "edit" && initialData ? initialData : createInitialQuotation()
   );
 
-  console.log("quotation:", quotation)
-
   useEffect(() => {
     try {
       if (mode === "edit") {
@@ -121,7 +119,6 @@ export default function QuotationPageClient({
   }, [quotation, mounted]);
 
   const handleDownloadPdf = async (grandTotal: number) => {
-    console.log("initial data:",grandTotal)
     try {
       // 🔹 Step 1: Prepare payload based on mode
       let payload;
@@ -146,8 +143,6 @@ export default function QuotationPageClient({
         };
       }
 
-      console.log("Payload:", payload);
-
       // 🔹 Step 2: Call API based on mode
       let response;
 
@@ -156,8 +151,6 @@ export default function QuotationPageClient({
       } else {
         response = await createQuotation(payload);
       }
-
-      console.log("Response:", response);
 
       // 🔹 Step 3: Handle success
       if (response?.success) {

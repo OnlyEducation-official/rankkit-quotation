@@ -43,3 +43,22 @@ export type QuotationData = {
 
 };
 
+export type QuotationListItem = {
+    clientName: string;
+    createdAt: string;
+    id: string;
+    quotationNumber: string;
+};
+
+export type PaginatedQuotationResponse = {
+  success:boolean;
+  message:string;
+  data: QuotationListItem[];
+  meta:{
+    page:number;
+    limit:number;
+    total:number;
+    totalPage:number;
+  }
+}
+

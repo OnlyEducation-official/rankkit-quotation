@@ -105,7 +105,6 @@ export default function QuotationForm({
     field: keyof QuotationItem,
     value: string | number,
   ) => {
-    console.log("update item")
     setQuotation((prev) => ({
       ...prev,
       items: prev.items.map((item) =>
@@ -116,7 +115,6 @@ export default function QuotationForm({
   };
 
   const addItem = () => {
-    console.log("add item")
     setQuotation((prev) => ({
       ...prev,
       items: [...prev.items, createEmptyItem()],
@@ -126,7 +124,6 @@ export default function QuotationForm({
   };
 
   const removeItem = (id: string) => {
-    console.log("remove item")
     setQuotation((prev) => {
       if (prev.items.length === 1) return prev;
 
@@ -149,7 +146,6 @@ export default function QuotationForm({
     const getItemTax = (item: QuotationItem) =>
       getItemSubtotal(item) * (item.taxPercent / 100);
     
-    console.log(quotation.items)
 
     const subtotal = quotation.items.reduce(
       (sum, item) => sum + getItemSubtotal(item),
@@ -157,8 +153,6 @@ export default function QuotationForm({
     );
 
     const grandTotal = subtotal - (quotation.discount || 0);
-
-    console.log("Grand Total:",grandTotal, "Sub Total:",subtotal)
 
     setgrandTotal(grandTotal)
 
