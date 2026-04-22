@@ -64,8 +64,9 @@ export default function AppPagination({
                 ? "pointer-events-none opacity-50"
                 : "cursor-pointer"
             }
-            onClick={(e:any) => {
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
               e.preventDefault();
+
               if (currentPage > 1 && !isLoading) {
                 onPageChange(currentPage - 1);
               }
@@ -87,7 +88,7 @@ export default function AppPagination({
               <PaginationLink
                 href="#"
                 isActive={currentPage === page}
-                onClick={(e:any) => {
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                   e.preventDefault();
                   if (!isLoading) {
                     onPageChange(page);
@@ -110,7 +111,7 @@ export default function AppPagination({
                 ? "pointer-events-none opacity-50"
                 : "cursor-pointer"
             }
-            onClick={(e:any) => {
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
               e.preventDefault();
               if (currentPage < totalPages && !isLoading) {
                 onPageChange(currentPage + 1);

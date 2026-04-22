@@ -11,7 +11,7 @@ type ApiResponse<T> = {
   };
   error?: {
     code: string;
-    details?: any;
+    details?: unknown;
   };
 };
 
