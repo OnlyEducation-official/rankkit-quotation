@@ -282,7 +282,9 @@ export default function QuotationListTable() {
               <>
                 {" • "}
                 Search:{" "}
-                <span className="font-medium text-foreground">"{search}"</span>
+                <span className="font-medium text-foreground">
+                  &quot;{search}&quot;
+                </span>
               </>
             ) : null}
             {isFetching && !isLoading ? (
