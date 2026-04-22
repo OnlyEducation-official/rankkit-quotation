@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Plus, Trash2, Download, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -89,8 +89,21 @@ export default function QuotationForm({
 
   const [customTermInput, setCustomTermInput] = useState("");
   const [flag, setFlag] = useState(false)
-  const [grandTotal, setgrandTotal] = useState(mode === "edit" ? quotation.grandTotal : 0)
+  // const [grandTotal, setgrandTotal] = useState(mode === "edit" ? quotation.grandTotal : 0)
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const grandTotal = useMemo(() => {
+    if (mode === "edit" && !flag) {
+      return quotation.grandTotal || 0;
+    }
+
+    const subtotal = quotation.items.reduce(
+      (sum, item) => sum + item.rate,
+      0
+    );
+
+    return subtotal - (quotation.discount || 0);
+  }, [mode, flag, quotation.items, quotation.discount, quotation.grandTotal]);
 
   const handleValidatedDownload = async () => {
     const isValid = validateQuotation();
@@ -129,6 +142,7 @@ export default function QuotationForm({
       ...prev,
       [field]: value,
     }));
+    setFlag(true)
   };
 
   const updateItem = (
@@ -142,7 +156,7 @@ export default function QuotationForm({
         item.id === id ? { ...item, [field]: value } : item,
       ),
     }));
-    setFlag(!flag)
+    setFlag(true)
   };
 
   const addItem = () => {
@@ -150,7 +164,7 @@ export default function QuotationForm({
       ...prev,
       items: [...prev.items, createEmptyItem()],
     }));
-    setFlag(!flag)
+    setFlag(true)
 
   };
 
@@ -163,32 +177,13 @@ export default function QuotationForm({
         items: prev.items.filter((item) => item.id !== id),
       };
     });
-    setFlag(!flag)
+    setFlag(true)
   };
 
   const resetForm = () => {
     localStorage.removeItem("quotation_draft");
     setQuotation(createInitialQuotation());
   };
-
-  useEffect(() => {
-
-    const getItemSubtotal = (item: QuotationItem) => item.rate;
-    const getItemTax = (item: QuotationItem) =>
-      getItemSubtotal(item) * (item.taxPercent / 100);
-
-
-    const subtotal = quotation.items.reduce(
-      (sum, item) => sum + getItemSubtotal(item),
-      0,
-    );
-
-    const grandTotal = subtotal - (quotation.discount || 0);
-
-    setgrandTotal(grandTotal)
-
-  }, [flag, mode])
-
 
 
   const handleCompanyChange = (value: "rankkit-media" | "rankkit-studio" | "both") => {
