@@ -18,7 +18,7 @@ import {
   getAllQuotations,
   getQuotationById,
 } from "@/src/services/quotation/quotation.service";
-import { QuotationData } from "@/src/types/quotation";
+import { QuotationData, QuotationListItem } from "@/src/types/quotation";
 
 export default function QuotationListTable() {
   const router = useRouter();
@@ -207,7 +207,7 @@ export default function QuotationListTable() {
                   </td>
                 </tr>
               ) : (
-                quotations.map((q: any) => (
+                quotations.map((q: QuotationListItem) => (
                   <tr
                     key={q.id}
                     className="group cursor-pointer border-b border-border/60 transition-colors hover:bg-muted/30"
