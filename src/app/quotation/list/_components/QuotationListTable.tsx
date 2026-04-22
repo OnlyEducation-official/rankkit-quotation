@@ -109,6 +109,7 @@ export default function QuotationListTable() {
 
   const handleDelete = async (id: string) => {
     try {
+
       const confirmDelete = confirm("Are you sure you want to delete this quotation?");
       if (!confirmDelete) return;
 
@@ -117,6 +118,7 @@ export default function QuotationListTable() {
       if (quotations.length === 1 && page > 1) {
         updatePageInUrl(page - 1);
       }
+
     } catch (error) {
       console.error("Delete failed:", error);
     }
@@ -124,7 +126,12 @@ export default function QuotationListTable() {
 
   const handleDuplicate = async (id: string) => {
     try {
+
+      const confirmDuplicate = confirm("Are you sure you want to duplicate this quotation?");
+      if (!confirmDuplicate) return;
+
       await duplicateMutation.mutateAsync(id);
+
     } catch (err) {
       console.error("Duplicate error:", err);
     }

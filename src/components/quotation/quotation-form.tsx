@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import TiptapEditor from "./tiptap-editor";
 import DownloadPdfAlert from "./DownloadPdfAlert";
+import { quotationSchema } from "@/src/app/lib/validations/quotation.schema";
 
 type QuotationFormProps = {
   quotation: QuotationData;
@@ -88,7 +89,37 @@ export default function QuotationForm({
 
   const [customTermInput, setCustomTermInput] = useState("");
   const [flag, setFlag] = useState(false)
-  const [grandTotal,setgrandTotal] = useState(mode === "edit" ? quotation.grandTotal : 0 )
+  const [grandTotal, setgrandTotal] = useState(mode === "edit" ? quotation.grandTotal : 0)
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleValidatedDownload = async () => {
+    const isValid = validateQuotation();
+
+    if (!isValid) return;
+
+    await onDownloadPdf(grandTotal || 0);
+  };
+
+  const validateQuotation = () => {
+    const result = quotationSchema.safeParse(quotation);
+
+    if (result.success) {
+      setErrors({});
+      return true;
+    }
+
+    const fieldErrors: Record<string, string> = {};
+
+    result.error.issues.forEach((issue) => {
+      const path = issue.path.join(".");
+      if (!fieldErrors[path]) {
+        fieldErrors[path] = issue.message;
+      }
+    });
+
+    setErrors(fieldErrors);
+    return false;
+  };
 
   const updateField = (
     field: keyof QuotationData,
@@ -141,11 +172,11 @@ export default function QuotationForm({
   };
 
   useEffect(() => {
-    
+
     const getItemSubtotal = (item: QuotationItem) => item.rate;
     const getItemTax = (item: QuotationItem) =>
       getItemSubtotal(item) * (item.taxPercent / 100);
-    
+
 
     const subtotal = quotation.items.reduce(
       (sum, item) => sum + getItemSubtotal(item),
@@ -156,7 +187,7 @@ export default function QuotationForm({
 
     setgrandTotal(grandTotal)
 
-  }, [flag,mode])
+  }, [flag, mode])
 
 
 
@@ -254,7 +285,7 @@ export default function QuotationForm({
           </AlertDialogContent>
         </AlertDialog>
 
-        <DownloadPdfAlert onDownloadPdf={onDownloadPdf} grandTotal={grandTotal || 0} mode={mode} />
+        <DownloadPdfAlert onDownloadPdf={handleValidatedDownload} grandTotal={grandTotal || 0} mode={mode} />
       </div>
 
       <Card>
@@ -339,26 +370,50 @@ export default function QuotationForm({
           <CardTitle>Client Details</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-2">
-          <Input
-            placeholder="Client Name"
-            value={quotation.clientName}
-            onChange={(e) => updateField("clientName", e.target.value)}
-          />
-          <Input
-            placeholder="Client Phone"
-            value={quotation.clientPhone}
-            onChange={(e) => updateField("clientPhone", e.target.value)}
-          />
-          <Input
-            placeholder="Client Email"
-            value={quotation.clientEmail}
-            onChange={(e) => updateField("clientEmail", e.target.value)}
-          />
-          <Input
-            placeholder="Client Address"
-            value={quotation.clientAddress}
-            onChange={(e) => updateField("clientAddress", e.target.value)}
-          />
+          <div>
+            <Input
+              placeholder="Client Name"
+              value={quotation.clientName}
+              onChange={(e) => updateField("clientName", e.target.value)}
+            />
+            {errors.clientName && (
+              <p className="mt-1 text-sm text-red-500">{errors.clientName}</p>
+            )}
+          </div>
+
+          <div>
+            <Input
+              placeholder="Client Phone"
+              value={quotation.clientPhone}
+              onChange={(e) => updateField("clientPhone", e.target.value)}
+            />
+            {errors.clientName && (
+              <p className="mt-1 text-sm text-red-500">{errors.clientName}</p>
+            )}
+          </div>
+
+          <div>
+            <Input
+              placeholder="Client Email"
+              value={quotation.clientEmail}
+              onChange={(e) => updateField("clientEmail", e.target.value)}
+            />
+            {errors.clientName && (
+              <p className="mt-1 text-sm text-red-500">{errors.clientName}</p>
+            )}
+          </div>
+
+          <div>
+            <Input
+              placeholder="Client Address"
+              value={quotation.clientAddress}
+              onChange={(e) => updateField("clientAddress", e.target.value)}
+            />
+            {errors.clientName && (
+              <p className="mt-1 text-sm text-red-500">{errors.clientName}</p>
+            )}
+          </div>
+
         </CardContent>
       </Card>
 
@@ -421,13 +476,18 @@ export default function QuotationForm({
 
               <p>Service Name</p>
 
-              <Input
-                placeholder="Enter Service Name"
-                value={item.title}
-                onChange={(e) =>
-                  updateItem(item.id, "title", e.target.value)
-                }
-              />
+              <div>
+                <Input
+                  placeholder="Enter Service Name"
+                  value={item.title}
+                  onChange={(e) => updateItem(item.id, "title", e.target.value)}
+                />
+                {errors[`items.${index}.title`] && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors[`items.${index}.title`]}
+                  </p>
+                )}
+              </div>
 
               <p>Service Description</p>
 
@@ -436,11 +496,18 @@ export default function QuotationForm({
                 onChange={(value) => updateItem(item.id, "description", value)}
               /> */}
 
-              <TiptapEditor
-                value={item.description}
-                onChange={(value) => updateItem(item.id, "description", value)}
-                placeholder="Write your service details...."
-              />
+              <div>
+                <TiptapEditor
+                  value={item.description}
+                  onChange={(value) => updateItem(item.id, "description", value)}
+                  placeholder="Write your service details...."
+                />
+                {errors[`items.${index}.description`] && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors[`items.${index}.description`]}
+                  </p>
+                )}
+              </div>
 
               <div className="grid gap-4 md:grid-cols-4">
                 {/* Rate */}
@@ -453,9 +520,14 @@ export default function QuotationForm({
                     min="0"
                     value={item.rate}
                     onChange={(e) =>
-                      updateItem(item.id, "rate", Number(e.target.value || 0))
+                      updateItem(item.id, "rate", Number(e.target.value))
                     }
                   />
+                  {errors[`items.${index}.rate`] && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors[`items.${index}.rate`]}
+                    </p>
+                  )}
                 </div>
 
               </div>

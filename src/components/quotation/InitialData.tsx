@@ -7,6 +7,7 @@ import { createQuotation, updateQuotationn } from "@/src/services/quotation/quot
 import { printQuotation } from "./print-quotation";
 import QuotationForm from "./quotation-form";
 import QuotationPreview from "./quotation-preview";
+import { useRouter } from "next/navigation";
 
 const formatDate = (date: string) => {
   if (!date) return date;
@@ -69,6 +70,8 @@ export default function QuotationPageClient({
   initialData,
 }: QuotationFormProps) {
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+
 
   const [quotation, setQuotation] = useState<QuotationData>(() =>
     mode === "edit" && initialData ? initialData : createInitialQuotation()
@@ -162,7 +165,7 @@ export default function QuotationPageClient({
         // reset only in create mode
         setQuotation(createInitialQuotation());
 
-        // router.push("/quotation/list");
+        router.push("/quotation/list");
 
       } else {
         console.error("API failed:", response?.message);
