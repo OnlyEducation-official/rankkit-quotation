@@ -10,8 +10,10 @@ export async function apiFetch<T>(
 ): Promise<T> {
   const { token, headers, ...restOptions } = options;
 
+  console.log(`${API_BASE_URL}${endpoint}`)
+
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...restOptions,
+    ...restOptions, 
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
