@@ -1,51 +1,37 @@
 "use client";
 
 import { Search, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type QuotationSearchProps = {
   placeholder?: string;
 };
 
-export default function QuotationSearch({
-  placeholder = "Search by quotation no, client, company, or salesperson...",
-}: QuotationSearchProps) {
+type SearchInputProps = {
+  initialValue: string;
+  placeholder: string;
+  pathname: string;
+  currentParams: string;
+};
+
+function SearchInput({
+  initialValue,
+  placeholder,
+  pathname,
+  currentParams,
+}: SearchInputProps) {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const searchFromUrl = searchParams.get("search") || "";
-  const [search, setSearch] = useState(searchFromUrl);
-
-  const lastSyncedSearchRef = useRef(searchFromUrl);
-  const isFirstRenderRef = useRef(true);
+  const [search, setSearch] = useState(initialValue);
 
   useEffect(() => {
-    const currentUrlSearch = searchParams.get("search") || "";
-
-    if (currentUrlSearch !== lastSyncedSearchRef.current) {
-      setSearch(currentUrlSearch);
-      lastSyncedSearchRef.current = currentUrlSearch;
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
-    if (isFirstRenderRef.current) {
-      isFirstRenderRef.current = false;
-      return;
-    }
-
     const trimmedSearch = search.trim();
-    const currentUrlSearch = searchParams.get("search") || "";
+    const params = new URLSearchParams(currentParams);
+    const currentUrlSearch = params.get("search") || "";
 
-    if (trimmedSearch === currentUrlSearch) {
-      return;
-    }
+    if (trimmedSearch === currentUrlSearch) return;
 
     const timer = setTimeout(() => {
-      const params = new URLSearchParams(searchParams.toString());
-
       if (trimmedSearch) {
         params.set("search", trimmedSearch);
       } else {
@@ -54,22 +40,22 @@ export default function QuotationSearch({
 
       params.set("page", "1");
 
-      lastSyncedSearchRef.current = trimmedSearch;
-      router.replace(`${pathname}?${params.toString()}`);
+      const queryString = params.toString();
+      router.replace(queryString ? `${pathname}?${queryString}` : pathname);
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [search, pathname, router]);
+  }, [search, pathname, currentParams, router]);
 
   const handleClear = () => {
     setSearch("");
 
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(currentParams);
     params.delete("search");
     params.set("page", "1");
 
-    lastSyncedSearchRef.current = "";
-    router.replace(`${pathname}?${params.toString()}`);
+    const queryString = params.toString();
+    router.replace(queryString ? `${pathname}?${queryString}` : pathname);
   };
 
   return (
@@ -95,5 +81,25 @@ export default function QuotationSearch({
         </button>
       ) : null}
     </div>
+  );
+}
+
+export default function QuotationSearch({
+  placeholder = "Search by quotation no, client, company, or salesperson...",
+}: QuotationSearchProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const searchFromUrl = searchParams.get("search") || "";
+  const currentParams = searchParams.toString();
+
+  return (
+    <SearchInput
+      key={searchFromUrl}
+      initialValue={searchFromUrl}
+      placeholder={placeholder}
+      pathname={pathname}
+      currentParams={currentParams}
+    />
   );
 }
