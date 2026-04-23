@@ -28,9 +28,9 @@ export default function DownloadPdfAlert({
 
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button type="button" className="gap-2 sm:ml-auto">
+                    <Button type="button" className="gap-2 sm:ml-auto w-full">
                         <Download className="h-4 w-4" />
-                        {mode === "edit" ? "Download and Edit" : "Download PDF"}
+                        {mode === "edit" ? "Download & Edit" : "Download"}
                     </Button>
                 </AlertDialogTrigger>
 

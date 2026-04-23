@@ -116,6 +116,8 @@ export default function QuotationForm({
   const validateQuotation = () => {
     const result = quotationSchema.safeParse(quotation);
 
+    console.log(quotation)
+
     if (result.success) {
       setErrors({});
       return true;
@@ -132,6 +134,15 @@ export default function QuotationForm({
 
     setErrors(fieldErrors);
     return false;
+  };
+
+  const clearError = (field: string) => {
+    setErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
   };
 
   const updateField = (
@@ -234,229 +245,313 @@ export default function QuotationForm({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        <Button type="button" onClick={addItem} className="gap-2">
-          <Plus className="h-4 w-4" />
-          {mode === "create" ? "Add Item" : "Edit Item"}
-        </Button>
+    <div className="space-y-8">
+      <div className="sticky top-4 z-10 rounded-2xl border bg-background/95 p-4 shadow-sm backdrop-blur">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              {mode === "create" ? "Create Quotation" : "Edit Quotation"}
+            </h2>
+          </div>
 
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button
-              type="button"
-              variant="outline"
-              className="gap-2"
-              disabled={mode === "edit"}
-            >
-              <RotateCcw className="h-4 w-4" />
-              Reset
-            </Button>
-          </AlertDialogTrigger>
-
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Are you sure you want to reset?
-              </AlertDialogTitle>
-
-              <AlertDialogDescription>
-                This will clear all quotation data including items, client details, and totals. This action cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-
-            <AlertDialogFooter>
-              <AlertDialogCancel>
-                Cancel
-              </AlertDialogCancel>
-
-              <AlertDialogAction
-                onClick={resetForm}
-                className="bg-red-600 hover:bg-red-700"
+          <div className="flex flex-row gap-2 justify-between overflow-x-auto">
+            <div>
+              <Button
+                type="button"
+                onClick={addItem}
+                className="flex-1 whitespace-nowrap rounded-xl px-3 py-2 text-sm sm:flex-none"
               >
-                Yes, Reset
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+                <Plus className="mr-1 h-4 w-4" />
+                Add
+              </Button>
+            </div>
 
-        <DownloadPdfAlert onDownloadPdf={handleValidatedDownload} grandTotal={grandTotal || 0} mode={mode} />
+            <div>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="gap-2 rounded-xl px-4"
+                    disabled={mode === "edit"}
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Reset
+                  </Button>
+                </AlertDialogTrigger>
+
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Reset quotation form?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will clear all quotation data including services, client details, and totals.
+                      This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={resetForm}
+                      className="bg-red-600 hover:bg-red-700"
+                    >
+                      Yes, Reset
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </div>
+          <div>
+            <DownloadPdfAlert
+              onDownloadPdf={handleValidatedDownload}
+              grandTotal={grandTotal || 0}
+              mode={mode}
+            />
+          </div>
+        </div>
       </div>
 
-      <Card>
-
-        <CardHeader>
-          <CardTitle>Company Details</CardTitle>
+      <Card className="overflow-hidden rounded-2xl border shadow-sm">
+        <CardHeader className="border-b bg-muted/30">
+          <CardTitle className="text-lg">Company Details</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Select the company and salesperson. Company information is auto-filled.
+          </p>
         </CardHeader>
 
-        <div className="md:col-span-2 pl-4">
-          <label className="mb-2 block text-sm font-medium">
-            Select Company
-          </label>
+        <CardContent className="space-y-6 p-6">
+          <div className="grid gap-5 md:grid-cols-2">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Select Company</label>
+              <Select
+                value={quotation.companyType}
+                onValueChange={(value) =>
+                  handleCompanyChange(value as "rankkit-media" | "rankkit-studio" | "both")
+                }
+              >
+                <SelectTrigger className="rounded-xl">
+                  <SelectValue placeholder="Select company" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="rankkit-media">Rankkit Media</SelectItem>
+                  <SelectItem value="rankkit-studio">Rankkit Studio</SelectItem>
+                  <SelectItem value="both">Both</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <Select
-            value={quotation.companyType}
-            onValueChange={(value) =>
-              handleCompanyChange(value as "rankkit-media" | "rankkit-studio" | "both")
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select company" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="rankkit-media">Rankkit Media</SelectItem>
-              <SelectItem value="rankkit-studio">Rankkit Studio</SelectItem>
-              <SelectItem value="both">Both</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Select Salesperson</label>
+              <Select
+                value={quotation.salesPersonName}
+                onValueChange={(value) =>
+                  handleSalespersonChange(value as "rhea" | "babita")
+                }
+              >
+                <SelectTrigger className="rounded-xl">
+                  <SelectValue placeholder="Select Salesperson" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="rhea">Rhea</SelectItem>
+                  <SelectItem value="babita">Babita</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
 
-        <div className="md:col-span-2 pl-4">
-          <label className="mb-2 block text-sm font-medium">
-            Select Salesperson
-          </label>
+          <div className="grid gap-5 md:grid-cols-2">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Company Name</label>
+              <Input
+                placeholder="Company Name"
+                value={quotation.companyName}
+                onChange={(e) => updateField("companyName", e.target.value)}
+                disabled
+                className="rounded-xl bg-muted/40"
+              />
+            </div>
 
-          <Select
-            value={quotation.salesPersonName}
-            onValueChange={(value) =>
-              handleSalespersonChange(value as "rhea" | "babita")
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Salesperson" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="rhea">Rhea</SelectItem>
-              <SelectItem value="babita">Babita</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Company Phone</label>
+              <Input
+                placeholder="Company Phone"
+                value={quotation.companyPhone}
+                onChange={(e) => updateField("companyPhone", e.target.value || "")}
+                disabled
+                className="rounded-xl bg-muted/40"
+              />
+            </div>
 
-        <CardContent className="grid gap-4 md:grid-cols-2">
-          <Input
-            placeholder="Company Name"
-            value={quotation.companyName}
-            onChange={(e) => updateField("companyName", e.target.value)}
-            disabled
-          />
-          <Input
-            placeholder="Company Phone"
-            value={quotation.companyPhone}
-            onChange={(e) => updateField("companyPhone", e.target.value)}
-            disabled
-          />
-          <Input
-            placeholder="Company Email"
-            value={quotation.companyEmail}
-            onChange={(e) => updateField("companyEmail", e.target.value)}
-            disabled
-          />
-          <Input
-            placeholder="Company Address"
-            value={quotation.companyAddress}
-            onChange={(e) => updateField("companyAddress", e.target.value)}
-            disabled
-          />
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Company Email</label>
+              <Input
+                placeholder="Company Email"
+                value={quotation.companyEmail}
+                onChange={(e) => updateField("companyEmail", e.target.value || "")}
+                disabled
+                className="rounded-xl bg-muted/40"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Company Address</label>
+              <Input
+                placeholder="Company Address"
+                value={quotation.companyAddress}
+                onChange={(e) => updateField("companyAddress", e.target.value || "")}
+                disabled
+                className="rounded-xl bg-muted/40"
+              />
+            </div>
+          </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Client Details</CardTitle>
+      <Card className="overflow-hidden rounded-2xl border shadow-sm">
+        <CardHeader className="border-b bg-muted/30">
+          <CardTitle className="text-lg">Client Details</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Fill in the client information used in the quotation.
+          </p>
         </CardHeader>
-        <CardContent className="grid gap-4 md:grid-cols-2">
-          <div>
+
+        <CardContent className="grid gap-5 p-6 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Client Name</label>
             <Input
               placeholder="Client Name"
               value={quotation.clientName}
-              onChange={(e) => updateField("clientName", e.target.value)}
+              onChange={(e) => {
+                updateField("clientName", e.target.value);
+                clearError("clientName");
+              }}
+              className="rounded-xl"
             />
             {errors.clientName && (
-              <p className="mt-1 text-sm text-red-500">{errors.clientName}</p>
+              <p className="text-sm text-red-500">{errors.clientName}</p>
             )}
           </div>
 
-          <div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Client Phone</label>
             <Input
               placeholder="Client Phone"
               value={quotation.clientPhone}
-              onChange={(e) => updateField("clientPhone", e.target.value)}
+              inputMode="numeric"
+              maxLength={10}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "");
+                updateField("clientPhone", value);
+              }}
+              className="rounded-xl"
             />
-            {errors.clientName && (
-              <p className="mt-1 text-sm text-red-500">{errors.clientName}</p>
-            )}
+            
           </div>
 
-          <div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Client Email</label>
             <Input
               placeholder="Client Email"
               value={quotation.clientEmail}
-              onChange={(e) => updateField("clientEmail", e.target.value)}
+              onChange={(e) => {
+                updateField("clientEmail", e.target.value);
+              }}
+              className="rounded-xl"
             />
-            {errors.clientName && (
-              <p className="mt-1 text-sm text-red-500">{errors.clientName}</p>
-            )}
           </div>
 
-          <div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Client Address</label>
             <Input
               placeholder="Client Address"
               value={quotation.clientAddress}
-              onChange={(e) => updateField("clientAddress", e.target.value)}
+              onChange={(e) => {
+                updateField("clientAddress", e.target.value);
+              }}
+              className="rounded-xl"
             />
-            {errors.clientName && (
-              <p className="mt-1 text-sm text-red-500">{errors.clientName}</p>
-            )}
           </div>
-
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Quotation Details</CardTitle>
+      <Card className="overflow-hidden rounded-2xl border shadow-sm">
+        <CardHeader className="border-b bg-muted/30">
+          <CardTitle className="text-lg">Quotation Details</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Choose the quotation date and validity period.
+          </p>
         </CardHeader>
 
-        <CardContent className="grid gap-4 md:grid-cols-3">
-          {/* Quotation Date */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-gray-700">
-              Quotation Date
-            </label>
+        <CardContent className="grid gap-5 p-6 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Quotation Date</label>
             <Input
               type="date"
               value={new Date(quotation.quotationDate).toLocaleDateString("en-CA")}
-              onChange={(e) => updateField("quotationDate", e.target.value)}
+              onChange={(e) => {
+                updateField("quotationDate", e.target.value);
+                clearError("quotationDate");
+              }}
+              className="rounded-xl"
             />
+            {errors.quotationDate && (
+              <p className="text-sm text-red-500">{errors.quotationDate}</p>
+            )}
           </div>
 
-          {/* Valid Till */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-gray-700">
-              Quotation Valid Till
-            </label>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Quotation Valid Till</label>
             <Input
               type="date"
-              // If validTill is undefined or null, default to empty string to avoid errors
               value={new Date(quotation.validTill).toLocaleDateString("en-CA")}
-              onChange={(e) => updateField("validTill", e.target.value)}
+              onChange={(e) => {
+                updateField("validTill", e.target.value);
+                clearError("validTill");
+              }}
+              className="rounded-xl"
             />
+            {errors.validTill && (
+              <p className="text-sm text-red-500">{errors.validTill}</p>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Services</CardTitle>
+      <Card className="overflow-hidden rounded-2xl border shadow-sm">
+        <CardHeader className="border-b bg-muted/30">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <CardTitle className="text-lg">Services</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Add service names, descriptions, and pricing details.
+              </p>
+            </div>
+
+            <Button type="button" variant="outline" onClick={addItem} className="rounded-xl">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Another Service
+            </Button>
+          </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+
+        <CardContent className="space-y-5 p-6">
           {quotation.items.map((item, index) => (
             <div
               key={item.id || `item-${index}`}
-              className="rounded-xl border p-4 space-y-4 bg-muted/20"
+              className="rounded-2xl border bg-background p-5 shadow-sm"
             >
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium">Service {index + 1}</h3>
+              <div className="mb-5 flex items-center justify-between border-b pb-4">
+                <div>
+                  <h3 className="text-base font-semibold text-foreground">
+                    Service {index + 1}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Enter service details and pricing.
+                  </p>
+                </div>
+
                 <Button
                   type="button"
                   variant="ghost"
@@ -464,194 +559,212 @@ export default function QuotationForm({
                   onClick={() => removeItem(item.id)}
                   disabled={quotation.items.length === 1}
                   aria-label={`Remove item ${index + 1}`}
+                  className="rounded-xl text-muted-foreground hover:text-red-600"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
 
-              <p>Service Name</p>
-
-              <div>
-                <Input
-                  placeholder="Enter Service Name"
-                  value={item.title}
-                  onChange={(e) => updateItem(item.id, "title", e.target.value)}
-                />
-                {errors[`items.${index}.title`] && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors[`items.${index}.title`]}
-                  </p>
-                )}
-              </div>
-
-              <p>Service Description</p>
-
-              {/* <RichTextEditor
-                value={item.description}
-                onChange={(value) => updateItem(item.id, "description", value)}
-              /> */}
-
-              <div>
-                <TiptapEditor
-                  value={item.description}
-                  onChange={(value) => updateItem(item.id, "description", value)}
-                  placeholder="Write your service details...."
-                />
-                {errors[`items.${index}.description`] && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors[`items.${index}.description`]}
-                  </p>
-                )}
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-4">
-                {/* Rate */}
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-gray-700">
-                    Amount
-                  </label>
+              <div className="space-y-5">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Service Name</label>
                   <Input
-                    type="number"
-                    min="0"
-                    value={item.rate}
-                    onChange={(e) =>
-                      updateItem(item.id, "rate", Number(e.target.value))
-                    }
+                    placeholder="Enter Service Name"
+                    value={item.title}
+                    onChange={(e) => {
+                      updateItem(item.id, "title", e.target.value);
+                      clearError(`items.${index}.title`);
+                    }}
+                    className="rounded-xl"
                   />
-                  {errors[`items.${index}.rate`] && (
-                    <p className="mt-1 text-sm text-red-500">
-                      {errors[`items.${index}.rate`]}
+                  {errors[`items.${index}.title`] && (
+                    <p className="text-sm text-red-500">
+                      {errors[`items.${index}.title`]}
                     </p>
                   )}
                 </div>
 
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">
+                    Service Description
+                  </label>
+                  <div className="rounded-xl border bg-background">
+                    <TiptapEditor
+                      value={item.description}
+                      onChange={(value) => {
+                        updateItem(item.id, "description", value);
+                        clearError(`items.${index}.description`);
+                      }}
+                      placeholder="Write your service details...."
+                    />
+                  </div>
+                  {errors[`items.${index}.description`] && (
+                    <p className="text-sm text-red-500">
+                      {errors[`items.${index}.description`]}
+                    </p>
+                  )}
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-3">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Amount</label>
+                    <Input
+                      type="number"
+                      min="0"
+                      value={item.rate}
+                      onChange={(e) => {
+                        updateItem(item.id, "rate", Number(e.target.value));
+                        clearError(`items.${index}.rate`);
+                      }}
+                      className="rounded-xl"
+                    />
+                    {errors[`items.${index}.rate`] && (
+                      <p className="text-sm text-red-500">
+                        {errors[`items.${index}.rate`]}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
-
-          <Button type="button" variant="outline" onClick={addItem}>
-            <Plus className="mr-2 h-4 w-4" />
-            Add Another Item
-          </Button>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Discount</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Input
-            type="number"
-            min="0"
-            placeholder="Discount"
-            value={quotation.discount}
-            onChange={(e) =>
-              updateField("discount", Number(e.target.value || 0))
-            }
-          />
+      <div className="grid gap-6 xl:grid-cols-2">
+        <Card className="overflow-hidden rounded-2xl border shadow-sm">
+          <CardHeader className="border-b bg-muted/30">
+            <CardTitle className="text-lg">Discount</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Apply any discount to the quotation total.
+            </p>
+          </CardHeader>
 
-        </CardContent>
+          <CardContent className="p-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Discount Amount</label>
+              <Input
+                type="number"
+                min="0"
+                placeholder="Discount"
+                value={quotation.discount}
+                onChange={(e) =>
+                  updateField("discount", Number(e.target.value || 0))
+                }
+                className="rounded-xl"
+              />
+            </div>
+          </CardContent>
+        </Card>
 
-        <div className="space-y-3">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="mb-4">
-              <h3 className="text-base font-semibold text-slate-900">
-                Additional Terms & Conditions
-              </h3>
-              <p className="mt-1 text-sm text-slate-500">
-                Add any custom terms that should appear below the preset terms in the final quotation.
-              </p>
+        <Card className="overflow-hidden rounded-2xl border shadow-sm">
+          <CardHeader className="border-b bg-muted/30">
+            <CardTitle className="text-lg">Summary</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Final quotation amount after discount.
+            </p>
+          </CardHeader>
+
+          <CardContent className="space-y-4 p-6">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <span>Subtotal</span>
+              <span>
+                {/* {subtotal.toLocaleString("en-IN", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })} */}
+              </span>
             </div>
 
-            <div className="space-y-3">
-              <label
-                htmlFor="custom-term"
-                className="block text-sm font-medium text-slate-700"
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <span>Discount</span>
+              <span>
+                {(quotation.discount || 0).toLocaleString("en-IN", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            </div>
+
+            <div className="rounded-xl bg-primary/5 px-4 py-4">
+              <div className="flex items-center justify-between">
+                <span className="text-base font-semibold text-foreground">
+                  Grand Total
+                </span>
+                <span className="text-xl font-bold tracking-tight text-foreground">
+                  ₹
+                  {grandTotal?.toLocaleString("en-IN", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="overflow-hidden rounded-2xl border shadow-sm">
+        <CardHeader className="border-b bg-muted/30">
+          <CardTitle className="text-lg">Additional Terms & Conditions</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Add custom terms that should appear below the preset terms in the final quotation.
+          </p>
+        </CardHeader>
+
+        <CardContent className="space-y-6 p-6">
+          <div className="space-y-2">
+            <label htmlFor="custom-term" className="text-sm font-medium text-foreground">
+              Add Custom Term
+            </label>
+
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <input
+                id="custom-term"
+                type="text"
+                value={customTermInput}
+                onChange={(e) => setCustomTermInput(e.target.value)}
+                placeholder="Enter custom term or condition"
+                className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+
+              <button
+                type="button"
+                onClick={handleAddCustomTerm}
+                className="inline-flex items-center justify-center rounded-xl bg-foreground px-5 py-3 text-sm font-medium text-background transition hover:opacity-90"
               >
-                Add Custom Term
-              </label>
+                Add Term
+              </button>
+            </div>
+          </div>
 
-              <div className="flex flex-col gap-2 sm:flex-row">
-                <input
-                  id="custom-term"
-                  type="text"
-                  value={customTermInput}
-                  onChange={(e) => setCustomTermInput(e.target.value)}
-                  placeholder="Enter custom term or condition"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                />
+          {Array.isArray(quotation.customTerms) && quotation.customTerms.length > 0 && (
+            <div className="space-y-3">
+              <p className="text-sm font-medium text-foreground">Added Terms</p>
 
-                <button
-                  type="button"
-                  onClick={handleAddCustomTerm}
-                  className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800 active:scale-[0.98]"
-                >
-                  Add Term
-                </button>
+              <div className="space-y-3">
+                {quotation.customTerms.map((term, index) => (
+                  <div
+                    key={`${term}-${index}`}
+                    className="flex items-start justify-between gap-4 rounded-xl border bg-muted/20 px-4 py-3"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="mt-1 text-sm font-semibold text-primary">•</span>
+                      <p className="text-sm leading-6 text-foreground">{term}</p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveCustomTerm(index)}
+                      className="shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
-
-            {Array.isArray(quotation.customTerms) && quotation.customTerms.length > 0 && (
-              <div className="mt-5 space-y-3">
-                <p className="text-sm font-medium text-slate-700">Added Terms</p>
-
-                <div className="space-y-2">
-                  {quotation.customTerms.map((term, index) => (
-                    <div
-                      key={`${term}-${index}`}
-                      className="flex items-start justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3"
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="mt-1 text-sm font-semibold text-blue-600">•</span>
-                        <p className="text-sm leading-6 text-slate-700">{term}</p>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveCustomTerm(index)}
-                        className="shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Summary</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2 text-sm">
-          <div className="flex items-center justify-between">
-            <span>Subtotal</span>
-            <span>
-              {/* {subtotal.toLocaleString('en-IN', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })} */}
-            </span>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <span>Discount</span>
-            <span>{(quotation.discount || 0).toFixed(2)}</span>
-          </div>
-
-          <div className="flex items-center justify-between border-t pt-3 text-base font-semibold">
-            <span>Grand Total</span>
-            <span>
-              {grandTotal?.toLocaleString('en-IN', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </span>
-          </div>
+          )}
         </CardContent>
       </Card>
     </div>

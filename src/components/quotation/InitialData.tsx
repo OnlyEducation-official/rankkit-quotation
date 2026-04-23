@@ -146,6 +146,8 @@ export default function QuotationPageClient({
         };
       }
 
+      console.log("payload:", payload)
+
       // 🔹 Step 2: Call API based on mode
       let response;
 

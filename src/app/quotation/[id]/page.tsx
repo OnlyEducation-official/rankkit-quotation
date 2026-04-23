@@ -9,6 +9,10 @@ type PageProps = {
     }>;
 };
 
+const formatToInputDate = (dateString: string) => {
+    return new Date(dateString).toISOString().split("T")[0];
+};
+
 export default async function QuotationIdPage({ params }: PageProps) {
 
     const { id } = await params;
@@ -27,6 +31,11 @@ export default async function QuotationIdPage({ params }: PageProps) {
     } else {
         initialData.terms = COMPANY_PRESETS["both"].terms;
     }
+
+    initialData.validTill = formatToInputDate(initialData.validTill)
+    initialData.quotationDate = formatToInputDate(initialData.quotationDate)
+
+    console.log(initialData)
 
     return (
         <div>

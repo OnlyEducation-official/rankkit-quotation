@@ -7,13 +7,13 @@ export type QuotationItem = {
   quantity: number;
   rate: number;
   taxPercent: number;
-  title:string;
+  title: string;
 };
 
 export type QuotationData = {
 
-  companyType:CompanyType
-  salesPersonName:salesPersonName
+  companyType: CompanyType
+  salesPersonName: salesPersonName
 
   companyName: string;
   companyAddress: string;
@@ -21,9 +21,9 @@ export type QuotationData = {
   companyEmail: string;
 
   clientName: string;
-  clientAddress: string;
-  clientPhone: string;
-  clientEmail: string;
+  clientAddress?: string;
+  clientPhone?: string;
+  clientEmail?: string;
 
   quotationNumber: string;
   quotationDate: string;
@@ -34,8 +34,8 @@ export type QuotationData = {
   discount: number;
   notes: string;
   terms?: string;
-  customTerms:string[];
-  grandTotal?:number;
+  customTerms: string[];
+  grandTotal?: number;
 
   id?: string;
   createdAt?: string;
@@ -44,21 +44,21 @@ export type QuotationData = {
 };
 
 export type QuotationListItem = {
-    clientName: string;
-    createdAt: string;
-    id: string;
-    quotationNumber: string;
+  clientName: string;
+  createdAt: string;
+  id: string;
+  quotationNumber: string;
 };
 
 export type PaginatedQuotationResponse = {
-  success:boolean;
-  message:string;
+  success: boolean;
+  message: string;
   data: QuotationListItem[];
-  meta:{
-    page:number;
-    limit:number;
-    total:number;
-    totalPage:number;
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPage: number;
   }
 }
 

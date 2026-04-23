@@ -31,23 +31,23 @@ export const quotationSchema = z
       .email("Company email must be valid"),
 
     clientName: z.string().trim().min(1, "Client name is required"),
-    clientAddress: z.string().trim().min(1, "Client address is required"),
+    clientAddress: z.string().trim().optional(),
     clientPhone: z
       .string()
       .trim()
-      .min(10, "Client phone must be at least 10 digits"),
+      .optional(),
     clientEmail: z
       .string()
       .trim()
-      .email("Client email must be valid"),
+      .optional(),
 
     quotationNumber: z.string().optional(),
-    // quotationDate: z
-    //   .string()
-    //   .regex(dateRegex, "Please select Quotation date."),
-    // validTill: z
-    //   .string()
-    //   .regex(dateRegex, "Please select Valid till date."),
+    quotationDate: z
+      .string()
+      .regex(dateRegex, "Please select Quotation date."),
+    validTill: z
+      .string()
+      .regex(dateRegex, "Please select Valid till date."),
 
     items: z
       .array(quotationItemSchema)
@@ -55,12 +55,12 @@ export const quotationSchema = z
 
 
   })
-//   .refine(
-//     (data) => new Date(data.validTill) >= new Date(data.quotationDate),
-//     {
-//       message: "Valid till date cannot be before quotation date",
-//       path: ["validTill"],
-//     }
-//   );
+  .refine(
+    (data) => new Date(data.validTill) >= new Date(data.quotationDate),
+    {
+      message: "Valid till date cannot be before quotation date",
+      path: ["validTill"],
+    }
+  );
 
 export type QuotationFormValues = z.infer<typeof quotationSchema>;
